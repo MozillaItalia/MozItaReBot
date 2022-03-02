@@ -13,10 +13,8 @@ load_dotenv()
 TOKEN = os.getenv("TESTTOKEN")
 
 
-
-#TODO: si potrebbe fare una funzione per aprire i file json ed evitare di ripetere il codice 
 json_frasi_path = "./json/frasi.json"
-json_liste_path="./json/liste.json"
+json_liste_path = "./json/liste.json"
 
 if Path(json_frasi_path).exists():
     frasi = json.loads(open(json_frasi_path, encoding="utf8").read())
@@ -29,7 +27,6 @@ if Path(json_liste_path).exists():
 else:
     print("File liste non presente.")
     exit()
-
 
 
 def start(update: Update, context: CallbackContext):
@@ -45,6 +42,7 @@ def start(update: Update, context: CallbackContext):
 
 
 def help(update: Update, context: CallbackContext):
+
     buttons = [
         [InlineKeyboardButton(str(frasi["button_testo_gruppi"]), callback_data="gruppi"),
          InlineKeyboardButton(
@@ -79,23 +77,32 @@ def progetti(update: Update, context: CallbackContext):
 
     buttons = []
     for nome_prog_moz in liste["progetti"]:
-        buttons.append([InlineKeyboardButton(nome_prog_moz, callback_data="progetti", url=liste["progetti"][str(nome_prog_moz)])])
-               
+
+        buttons.append([InlineKeyboardButton(
+            nome_prog_moz, callback_data="progetti", url=liste["progetti"][str(nome_prog_moz)])])
+
     reply_markup = InlineKeyboardMarkup(buttons)
-    update.message.reply_text(str(frasi["cmd_progetti"]), reply_markup=reply_markup)
+    update.message.reply_text(
+        str(frasi["cmd_progetti"]), reply_markup=reply_markup)
 
-    buttons.clear()
+    buttons.clear()  # questa cosa si ptrebbe fare con udue variabili diverese (es. buttons e buttons2) ma in questo omdo utilizzo la stessa avriabile per tutti i bottoni del bot per favorire eventuali manutenzioni e sviluppi futuri
     for nome_porg_mozita in liste["progetti_mozita"]:
-        buttons.append([InlineKeyboardButton(nome_porg_mozita, callback_data="progetti", url=liste["progetti_mozita"][str(nome_porg_mozita)])])
-    buttons.append([InlineKeyboardButton(str(frasi["button_back_mostra_help"]),     callback_data="help")])
 
+        buttons.append([InlineKeyboardButton(nome_porg_mozita, callback_data="progetti",
+                       url=liste["progetti_mozita"][str(nome_porg_mozita)])])
 
-    update.message.reply_text(str(frasi["cmd_progetti2"]), reply_markup=reply_markup)
+    buttons.append([InlineKeyboardButton(
+        str(frasi["button_back_mostra_help"]),    callback_data="help")])
+
+    update.message.reply_text(
+        str(frasi["cmd_progetti2"]), reply_markup=reply_markup)
 
 
 def buttons_handler(update: Update, context: CallbackContext):
+    
     query = update.callback_query
     query.answer()
+
     if str(query.data).lower() == "help":
         query.message.reply_markdown(str(frasi["cmd_help"]))
         buttons = [
@@ -121,6 +128,7 @@ def buttons_handler(update: Update, context: CallbackContext):
         reply_markup = InlineKeyboardMarkup(buttons)
         query.message.reply_text(
             str(frasi["cmd_help2"]), reply_markup=reply_markup)
+
     elif str(query.data).lower() == "supporto":
         buttons = [
             [InlineKeyboardButton(str(frasi["button_support"]), url="https://t.me/joinchat/BCql3UMy26nl4qxuRecDsQ"),
@@ -149,7 +157,6 @@ def buttons_handler(update: Update, context: CallbackContext):
 def main() -> None:
 
     updater = Updater(str(TOKEN))
-
     dp = updater.dispatcher
 
     dp.add_handler(CommandHandler("start", start))
