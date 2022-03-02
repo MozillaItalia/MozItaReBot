@@ -12,12 +12,24 @@ from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 load_dotenv()
 TOKEN = os.getenv("TESTTOKEN")
 
+
+
+#TODO: si potrebbe fare una funzione per aprire i file json ed evitare di ripetere il codice 
 json_frasi_path = "./json/frasi.json"
+json_liste_path="./json/liste.json"
+
 if Path(json_frasi_path).exists():
     frasi = json.loads(open(json_frasi_path, encoding="utf8").read())
 else:
     print("File frasi non presente.")
     exit()
+
+if Path(json_liste_path).exists():
+    liste = json.loads(open(json_liste_path, encoding="utf8").read())
+else:
+    print("File liste non presente.")
+    exit()
+
 
 
 def start(update: Update, context: CallbackContext):
@@ -61,6 +73,24 @@ def help(update: Update, context: CallbackContext):
 
 def unknown(update: Update, context: CallbackContext):
     update.message.reply_text(frasi["comando_non_riconosciuto"])
+
+
+def progetti(update: Update, context: CallbackContext):
+
+    buttons = []
+    for nome_prog_moz in liste["progetti"]:
+        buttons.append([InlineKeyboardButton(nome_prog_moz, callback_data="progetti", url=liste["progetti"][str(nome_prog_moz)])])
+               
+    reply_markup = InlineKeyboardMarkup(buttons)
+    update.message.reply_text(str(frasi["cmd_progetti"]), reply_markup=reply_markup)
+
+    buttons.clear()
+    for nome_porg_mozita in liste["progetti_mozita"]:
+        buttons.append([InlineKeyboardButton(nome_porg_mozita, callback_data="progetti", url=liste["progetti_mozita"][str(nome_porg_mozita)])])
+    buttons.append([InlineKeyboardButton(str(frasi["button_back_mostra_help"]),     callback_data="help")])
+
+
+    update.message.reply_text(str(frasi["cmd_progetti2"]), reply_markup=reply_markup)
 
 
 def buttons_handler(update: Update, context: CallbackContext):
@@ -124,6 +154,8 @@ def main() -> None:
 
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("progetti", progetti))
+
     dp.add_handler(MessageHandler(Filters.text, unknown))
     dp.add_handler(MessageHandler(Filters.command, unknown))
     dp.add_handler(CallbackQueryHandler(buttons_handler))
