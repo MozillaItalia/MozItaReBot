@@ -6,7 +6,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 import logging
 from telegram.update import Update
-from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandler, ConversationHandler, Filters, CallbackContext, CallbackQueryHandler)
+from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandler,
+                          ConversationHandler, Filters, CallbackContext, CallbackQueryHandler)
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
 load_dotenv()
@@ -30,16 +31,27 @@ else:
 
 
 def start(update: Update, context: CallbackContext):
+    '''Comando start, mostra messaggio di benevnuto e indirizza al menu'''
 
     buttons = [
         [InlineKeyboardButton(str(frasi["button_start"]), callback_data="help")]]
 
     reply_markup = InlineKeyboardMarkup(buttons)
-    update.message.reply_markdown(str(frasi["start"]))
-    update.message.reply_text(str(frasi["start2"]), reply_markup=reply_markup)
+    update.message.reply_text(str(frasi["start"]), reply_markup=reply_markup)
 
 
 def help(update: Update, context: CallbackContext):
+    '''Comando help, spiega ocsa fanno i vari comandi e mostra i menu con le varie funzioni:
+    - gruppi: reinirizza ai vari gruppi della community
+    - social: reinirizza ai canali social della community
+    - ho bisogno di assistenza: reinirizza ad un messaggio di aiuto
+    - avvisi: -
+    - meeting: -
+    - progetti attivi: mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia
+    - vademecum: -
+    - regolamento: -
+    - info: -  
+    - lascia il tuo feedback: - '''
 
     buttons = [
         [InlineKeyboardButton(str(frasi["button_testo_gruppi"]), callback_data="gruppi"),
@@ -72,6 +84,8 @@ def unknown(update: Update, context: CallbackContext):
 
 
 def progetti(update: Update, context: CallbackContext):
+    '''Comando progetti, mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia.
+    Scorre nella lista dei progetti presa dal file json e crea un bottone con link per ogni progetto.'''
 
     buttons = []
     for nome_prog_moz in liste["progetti"]:
@@ -97,7 +111,8 @@ def progetti(update: Update, context: CallbackContext):
 
 
 def buttons_handler(update: Update, context: CallbackContext):
-    
+    '''Cattura il click di un bottone per generare un nuovo messaggio'''
+
     query = update.callback_query
     query.answer()
 
