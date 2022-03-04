@@ -15,7 +15,6 @@ else:
     exit()
 
 
-
 def start(update: Update, context: CallbackContext):
     '''Comando start, mostra messaggio di benevnuto e indirizza al menu'''
 

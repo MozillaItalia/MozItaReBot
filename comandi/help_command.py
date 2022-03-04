@@ -6,7 +6,6 @@ from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandl
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
 
-
 json_frasi_path = "./json/frasi.json"
 
 if Path(json_frasi_path).exists():
@@ -14,6 +13,7 @@ if Path(json_frasi_path).exists():
 else:
     print("File frasi non presente.")
     exit()
+
 
 def help(update: Update, context: CallbackContext):
     '''Comando help, spiega ocsa fanno i vari comandi e mostra i menu con le varie funzioni:
