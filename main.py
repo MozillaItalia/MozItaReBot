@@ -32,9 +32,7 @@ else:
 def start(update: Update, context: CallbackContext):
 
     buttons = [
-        [InlineKeyboardButton(str(frasi["button_start"]), callback_data="help"),
-         InlineKeyboardButton(str(frasi["button_start2"]), callback_data="supporto")]
-    ]
+        [InlineKeyboardButton(str(frasi["button_start"]), callback_data="help")]]
 
     reply_markup = InlineKeyboardMarkup(buttons)
     update.message.reply_markdown(str(frasi["start"]))
