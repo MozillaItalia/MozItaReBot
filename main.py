@@ -97,7 +97,7 @@ def progetti(update: Update, context: CallbackContext):
     update.message.reply_text(
         str(frasi["cmd_progetti"]), reply_markup=reply_markup)
 
-    buttons.clear()  # questa cosa si ptrebbe fare con udue variabili diverese (es. buttons e buttons2) ma in questo omdo utilizzo la stessa avriabile per tutti i bottoni del bot per favorire eventuali manutenzioni e sviluppi futuri
+    buttons.clear()  # questa cosa si potrebbe fare con due variabili diverse (es. buttons e buttons2) ma in questo modo utilizzo la stessa variabile per tutti i bottoni del bot per favorire eventuali manutenzioni e sviluppi futuri
     for nome_porg_mozita in liste["progetti_mozita"]:
 
         buttons.append([InlineKeyboardButton(nome_porg_mozita, callback_data="progetti",
