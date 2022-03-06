@@ -1,4 +1,3 @@
-from ast import arguments
 import os
 import sys
 import json
@@ -111,6 +110,66 @@ def progetti(update: Update, context: CallbackContext):
         str(frasi["cmd_progetti2"]), reply_markup=reply_markup)
 
 
+def handler_groups(update: Update, context: CallbackContext):
+    '''
+        Handler per tutti i comandi dei gruppi. Restituisce un messaggio di testo e un bottone con un link al gruppo scelto.
+        Es. /home -> messaggio di presentazione del gruppo home e bottone che rimanda al gruppo home
+    '''
+
+    # bisogna capire di che comando si tratta
+    # dell'intero messaggio, prendi solo la parte dopo lo / e prima di uno spazio
+    # (i comandi sono gestiti dall'handler e saranno sempre nella forma '/cmd param1')
+    # (note: there probably is a better way to achieve this)
+    cmd = update.message.text.encode('utf-8').decode().split(" ")[0][1:]
+
+    buttons = []
+    txt = ""
+
+    match cmd:
+        case "home":
+            buttons = [
+                [InlineKeyboardButton(str(frasi["btn_home"]), url=str(
+                    liste["link_gruppi"]["home"]), callback_data="home")]
+            ]
+            txt = str(frasi["cmd_home"])
+
+        case "news":
+            buttons = [
+                [InlineKeyboardButton(str(frasi["btn_news"]), url=str(
+                    liste["link_gruppi"]["news"]), callback_data="news")]
+            ]
+            txt = str(frasi["cmd_news"])
+
+        case "dev" | "developers" | "sviluppo":
+            buttons = [
+                [InlineKeyboardButton(str(frasi["btn_developers"]), url=str(
+                    liste["link_gruppi"]["developers"]), callback_data="dev")]
+            ]
+            txt = str(frasi["cmd_dev"])
+
+        case "dem" | "design" | "marketing":
+            buttons = [
+                [InlineKeyboardButton(str(frasi["btn_dem"]), url=str(
+                    liste["link_gruppi"]["dem"]), callback_data="dem")]
+            ]
+            txt = str(frasi["cmd_dem"])
+
+        case "lion" | "l10n":
+            buttons = [
+                [InlineKeyboardButton(str(frasi["btn_l10n"]), url=str(
+                    liste["link_gruppi"]["l10n"]), callback_data="l10n")]
+            ]
+            txt = str(frasi["cmd_l10n"])
+
+        case _:
+            buttons = []
+            txt = "Caro sviluppatore, hai dimenticato di gestire questo handler. Crea un nuovo case e definisci bottone e testo.\n\n_\"Ottimo! Ma hai lasciato degli oggetti alle tue spalle...\"_\n- Merlin Munroe"
+
+    reply_markup = InlineKeyboardMarkup(buttons)
+    update.message.reply_text(
+        txt, reply_markup=reply_markup, parse_mode="MARKDOWN")
+
+
 def buttons_handler(update: Update, context: CallbackContext):
     '''Cattura il click di un bottone per generare un nuovo messaggio'''
 
@@ -165,7 +224,7 @@ def buttons_handler(update: Update, context: CallbackContext):
 
         reply_markup = InlineKeyboardMarkup(buttons)
         query.message.reply_markdown(
-            str(frasi["forum"]),  reply_markup=reply_markup)
+            str(frasi["forum"]),  reply_markup=reply_markup, parse_mode="MARKDOWN")
 
 
 def main() -> None:
@@ -176,6 +235,28 @@ def main() -> None:
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("progetti", progetti))
+
+    # comandi che rimandano a gruppi (comandi redirect)
+    # alias:
+    #       può capitare che un utente si sbagli o chiami un gruppo con un nome diverso (o più corto)
+    #       per questo sono stati aggiunti dei nomi più comodi.
+    #       Ex. /sviluppo e /dev hanno lo stesso comportamento.
+    # nota:
+    #       ogni alias va aggiunto nell'handler, altrimenti non succederà nulla
+    dp.add_handler(CommandHandler("home", handler_groups))
+    dp.add_handler(CommandHandler("news", handler_groups))
+
+    dp.add_handler(CommandHandler("dev", handler_groups))
+    dp.add_handler(CommandHandler("developers", handler_groups))
+    dp.add_handler(CommandHandler("sviluppo", handler_groups))
+
+    dp.add_handler(CommandHandler("dem", handler_groups))
+    dp.add_handler(CommandHandler("design", handler_groups))
+    dp.add_handler(CommandHandler("marketing", handler_groups))
+    dp.add_handler(CommandHandler("designmarketing", handler_groups))
+
+    dp.add_handler(CommandHandler("lion", handler_groups))
+    dp.add_handler(CommandHandler("l10n", handler_groups))
 
     dp.add_handler(MessageHandler(Filters.text, unknown))
     dp.add_handler(MessageHandler(Filters.command, unknown))
