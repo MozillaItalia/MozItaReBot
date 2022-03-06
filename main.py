@@ -31,8 +31,7 @@ else:
 
 
 def start(update: Update, context: CallbackContext):
-    '''Comando start, mostra messaggio di benevnuto e indirizza al menu'''
-
+    '''Comando start, mostra messaggio di benvenuto e indirizza al menu'''
     buttons = [
         [InlineKeyboardButton(str(frasi["button_start"]), callback_data="help")]]
 
@@ -41,10 +40,10 @@ def start(update: Update, context: CallbackContext):
 
 
 def help(update: Update, context: CallbackContext):
-    '''Comando help, spiega ocsa fanno i vari comandi e mostra i menu con le varie funzioni:
-    - gruppi: reinirizza ai vari gruppi della community
-    - social: reinirizza ai canali social della community
-    - ho bisogno di assistenza: reinirizza ad un messaggio di aiuto
+    '''Comando help, spiega cosa fanno i vari comandi e mostra i menu con le varie funzioni:
+    - gruppi: reindirizza ai vari gruppi della community
+    - social: reindirizza ai canali social della community
+    - ho bisogno di assistenza: reindirizza ad un messaggio di aiuto
     - avvisi: -
     - meeting: -
     - progetti attivi: mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia
@@ -80,6 +79,7 @@ def help(update: Update, context: CallbackContext):
 
 
 def unknown(update: Update, context: CallbackContext):
+    '''In caso il comando passato non venga riconosciuto, restituisce un opportuno messaggio di errore'''
     update.message.reply_text(frasi["comando_non_riconosciuto"])
 
 
