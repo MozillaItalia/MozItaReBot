@@ -98,10 +98,10 @@ def progetti(update: Update, context: CallbackContext):
         str(frasi["cmd_progetti"]), reply_markup=reply_markup)
 
     buttons.clear()  # questa cosa si potrebbe fare con due variabili diverse (es. buttons e buttons2) ma in questo modo utilizzo la stessa variabile per tutti i bottoni del bot per favorire eventuali manutenzioni e sviluppi futuri
-    for nome_porg_mozita in liste["progetti_mozita"]:
 
-        buttons.append([InlineKeyboardButton(nome_porg_mozita, callback_data="progetti",
-                       url=liste["progetti_mozita"][str(nome_porg_mozita)])])
+    for nome_prog_mozita in liste["progetti_mozita"]:
+        buttons.append([InlineKeyboardButton(nome_prog_mozita, callback_data="progetti",
+                       url=liste["progetti_mozita"][str(nome_prog_mozita)])])
 
     buttons.append([InlineKeyboardButton(
         str(frasi["button_back_mostra_help"]),    callback_data="help")])
