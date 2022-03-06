@@ -36,7 +36,8 @@ def start(update: Update, context: CallbackContext):
         [InlineKeyboardButton(str(frasi["btn_start"]), callback_data="help")]]
 
     reply_markup = InlineKeyboardMarkup(buttons)
-    update.message.reply_text(str(frasi["start"]), reply_markup=reply_markup)
+    update.message.reply_text(
+        str(frasi["start"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
 
 
 def help(update: Update, context: CallbackContext):
@@ -75,7 +76,7 @@ def help(update: Update, context: CallbackContext):
     reply_markup = InlineKeyboardMarkup(buttons)
     update.message.reply_markdown(str(frasi["cmd_help"]))
     update.message.reply_text(
-        str(frasi["cmd_help2"]), reply_markup=reply_markup)
+        str(frasi["cmd_help2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
 
 
 def unknown(update: Update, context: CallbackContext):
@@ -95,7 +96,7 @@ def progetti(update: Update, context: CallbackContext):
 
     reply_markup = InlineKeyboardMarkup(buttons)
     update.message.reply_text(
-        str(frasi["cmd_progetti"]), reply_markup=reply_markup)
+        str(frasi["cmd_progetti"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
 
     buttons.clear()  # questa cosa si potrebbe fare con due variabili diverse (es. buttons e buttons2) ma in questo modo utilizzo la stessa variabile per tutti i bottoni del bot per favorire eventuali manutenzioni e sviluppi futuri
 
@@ -107,7 +108,7 @@ def progetti(update: Update, context: CallbackContext):
         str(frasi["btn_back_mostra_help"]),    callback_data="help")])
 
     update.message.reply_text(
-        str(frasi["cmd_progetti2"]), reply_markup=reply_markup)
+        str(frasi["cmd_progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
 
 
 def handler_groups(update: Update, context: CallbackContext):
@@ -167,7 +168,7 @@ def handler_groups(update: Update, context: CallbackContext):
 
     reply_markup = InlineKeyboardMarkup(buttons)
     update.message.reply_text(
-        txt, reply_markup=reply_markup, parse_mode="MARKDOWN")
+        txt, reply_markup=reply_markup, parse_mode="MARKDOWN", parse_mode="MARKDOWN")
 
 
 def buttons_handler(update: Update, context: CallbackContext):
@@ -200,7 +201,7 @@ def buttons_handler(update: Update, context: CallbackContext):
 
         reply_markup = InlineKeyboardMarkup(buttons)
         query.message.reply_text(
-            str(frasi["cmd_help2"]), reply_markup=reply_markup)
+            str(frasi["cmd_help2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
 
     elif str(query.data).lower() == "supporto":
         buttons = [
@@ -214,7 +215,7 @@ def buttons_handler(update: Update, context: CallbackContext):
 
         reply_markup = InlineKeyboardMarkup(buttons)
         query.message.reply_markdown(
-            str(frasi["cmd_supporto"]),  reply_markup=reply_markup)
+            str(frasi["cmd_supporto"]),  reply_markup=reply_markup, parse_mode="MARKDOWN")
 
     elif str(query.data).lower() == "forum":
         buttons = [
