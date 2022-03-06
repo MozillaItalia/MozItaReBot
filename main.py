@@ -168,7 +168,7 @@ def handler_groups(update: Update, context: CallbackContext):
 
     reply_markup = InlineKeyboardMarkup(buttons)
     update.message.reply_text(
-        txt, reply_markup=reply_markup, parse_mode="MARKDOWN", parse_mode="MARKDOWN")
+        txt, reply_markup=reply_markup, parse_mode="MARKDOWN")
 
 
 def buttons_handler(update: Update, context: CallbackContext):
