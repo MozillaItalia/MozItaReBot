@@ -7,19 +7,13 @@ import json
 
 
 json_frasi_path = "./json/frasi.json"
-
-if Path(json_frasi_path).exists():
-    frasi = json.loads(open(json_frasi_path, encoding="utf8").read())
-else:
-    print("File frasi non presente.")
-    exit()
-
+frasi = json.loads(open(json_frasi_path, encoding="utf8").read())
 
 def start(update: Update, context: CallbackContext):
-    '''Comando start, mostra messaggio di benevnuto e indirizza al menu'''
-
+    '''Comando start, mostra messaggio di benvenuto e indirizza al menu'''
     buttons = [
-        [InlineKeyboardButton(str(frasi["button_start"]), callback_data="help")]]
+        [InlineKeyboardButton(str(frasi["btn_start"]), callback_data="help")]]
 
     reply_markup = InlineKeyboardMarkup(buttons)
-    update.message.reply_text(str(frasi["start"]), reply_markup=reply_markup)
+    update.message.reply_text(
+        str(frasi["start"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
