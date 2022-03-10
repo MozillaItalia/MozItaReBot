@@ -47,4 +47,3 @@ def help(update: Update, context: CallbackContext):
     update.message.reply_markdown(str(frasi["cmd_help"]))
     update.message.reply_text(
         str(frasi["cmd_help2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
-

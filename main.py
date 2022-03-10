@@ -3,18 +3,18 @@ import sys
 import json
 from pathlib import Path
 
-import comandi 
+import comandi
 from comandi.start_command import start
 from comandi.help_command import help
 from comandi.progetti_command import progetti
 from comandi.redirect_handler_command import handler_groups
 
 
-
 from dotenv import load_dotenv
 import logging
 from telegram.update import Update
-from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandler, ConversationHandler, Filters, CallbackContext, CallbackQueryHandler)
+from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandler,
+                          ConversationHandler, Filters, CallbackContext, CallbackQueryHandler)
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
 load_dotenv()
@@ -34,7 +34,6 @@ if Path(json_liste_path).exists():
 else:
     print("File liste non presente.")
     exit()
-
 
 
 def unknown(update: Update, context: CallbackContext):
@@ -117,7 +116,8 @@ def buttons_handler(update: Update, context: CallbackContext):
             str(frasi["btn_back_mostra_help"]),    callback_data="help")])
 
         query.message.reply_text(
-            str(frasi["cmd_progetti2"]),reply_markup=reply_markup, parse_mode="MARKDOWN")
+            str(frasi["cmd_progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+
 
 def main() -> None:
 

@@ -9,6 +9,7 @@ import json
 json_frasi_path = "./json/frasi.json"
 frasi = json.loads(open(json_frasi_path, encoding="utf8").read())
 
+
 def start(update: Update, context: CallbackContext):
     '''Comando start, mostra messaggio di benvenuto e indirizza al menu'''
     buttons = [
