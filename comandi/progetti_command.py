@@ -14,7 +14,6 @@ frasi = json.loads(open(json_frasi_path, encoding="utf8").read())
 liste = json.loads(open(json_liste_path, encoding="utf8").read())
 
 
-
 def progetti(update: Update, context: CallbackContext):
     '''Comando progetti, mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia.
     Scorre nella lista dei progetti presa dal file json e crea un bottone con link per ogni progetto.'''
