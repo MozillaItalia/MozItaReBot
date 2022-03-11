@@ -8,6 +8,7 @@ from comandi.start_command import start
 from comandi.help_command import help
 from comandi.progetti_command import progetti
 from comandi.redirect_handler_command import handler_groups
+from comandi.unknow_command import unknown
 
 
 from dotenv import load_dotenv
@@ -34,10 +35,6 @@ if Path(json_liste_path).exists():
 else:
     print("File liste non presente.")
     exit()
-
-
-def unknown(update: Update, context: CallbackContext):
-    update.message.reply_text(frasi["comando_non_riconosciuto"])
 
 
 def buttons_handler(update: Update, context: CallbackContext):
