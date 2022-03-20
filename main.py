@@ -82,10 +82,11 @@ def unknown(update: Update, context: CallbackContext):
     '''In caso il comando passato non venga riconosciuto, restituisce un opportuno messaggio di errore'''
     update.message.reply_text(frasi["comando_non_riconosciuto"])
 
-
 def progetti(update: Update, context: CallbackContext):
     '''Comando progetti, mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia.
     Scorre nella lista dei progetti presa dal file json e crea un bottone con link per ogni progetto.'''
+
+    query = update.callback_query
 
     buttons = []
     for nome_prog_moz in liste["progetti"]:
@@ -94,21 +95,14 @@ def progetti(update: Update, context: CallbackContext):
             nome_prog_moz, callback_data="progetti", url=liste["progetti"][str(nome_prog_moz)])])
 
     reply_markup = InlineKeyboardMarkup(buttons)
-    update.message.reply_text(
-        str(frasi["cmd_progetti"]), reply_markup=reply_markup)
+    if not hasattr(update.callback_query, 'inline_message_id'):
+        update.message.reply_text(
+            str(frasi["cmd_progetti"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+    else:
+        query.answer()
 
-    buttons.clear()  # questa cosa si potrebbe fare con due variabili diverse (es. buttons e buttons2) ma in questo modo utilizzo la stessa variabile per tutti i bottoni del bot per favorire eventuali manutenzioni e sviluppi futuri
-
-    for nome_prog_mozita in liste["progetti_mozita"]:
-        buttons.append([InlineKeyboardButton(nome_prog_mozita, callback_data="progetti",
-                       url=liste["progetti_mozita"][str(nome_prog_mozita)])])
-
-    buttons.append([InlineKeyboardButton(
-        str(frasi["button_back_mostra_help"]),    callback_data="help")])
-
-    update.message.reply_text(
-        str(frasi["cmd_progetti2"]), reply_markup=reply_markup)
-
+        query.message.reply_text(
+            str(frasi["cmd_progetti"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
 
 def buttons_handler(update: Update, context: CallbackContext):
     '''Cattura il click di un bottone per generare un nuovo messaggio'''
@@ -168,27 +162,7 @@ def buttons_handler(update: Update, context: CallbackContext):
 
     elif str(query.data).lower() == "progetti":
         buttons = []
-        for nome_prog_moz in liste["progetti"]:
-
-            buttons.append([InlineKeyboardButton(
-                nome_prog_moz, callback_data="progetti", url=liste["progetti"][str(nome_prog_moz)])])
-
-        reply_markup = InlineKeyboardMarkup(buttons)
-        query.message.reply_text(
-            str(frasi["cmd_progetti"]), reply_markup=reply_markup)
-
-        buttons.clear()
-
-        for nome_prog_mozita in liste["progetti_mozita"]:
-
-            buttons.append([InlineKeyboardButton(
-                nome_prog_mozita, callback_data="progetti", url=liste["progetti_mozita"][str(nome_prog_mozita)])])
-
-        buttons.append([InlineKeyboardButton(
-            str(frasi["button_back_mostra_help"]),    callback_data="help")])
-
-        query.message.reply_text(
-            str(frasi["cmd_progetti2"]), reply_markup=reply_markup)
+        progetti(update, context)
 
 
 def main() -> None:
