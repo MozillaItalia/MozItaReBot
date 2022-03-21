@@ -82,27 +82,48 @@ def unknown(update: Update, context: CallbackContext):
     '''In caso il comando passato non venga riconosciuto, restituisce un opportuno messaggio di errore'''
     update.message.reply_text(frasi["comando_non_riconosciuto"])
 
+
 def progetti(update: Update, context: CallbackContext):
     '''Comando progetti, mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia.
     Scorre nella lista dei progetti presa dal file json e crea un bottone con link per ogni progetto.'''
 
     query = update.callback_query
-
     buttons = []
+
     for nome_prog_moz in liste["progetti"]:
 
         buttons.append([InlineKeyboardButton(
             nome_prog_moz, callback_data="progetti", url=liste["progetti"][str(nome_prog_moz)])])
 
     reply_markup = InlineKeyboardMarkup(buttons)
-    if not hasattr(update.callback_query, 'inline_message_id'):
+
+    if not hasattr(update.callback_query, "inline_message_id"):
         update.message.reply_text(
             str(frasi["cmd_progetti"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
     else:
         query.answer()
-
         query.message.reply_text(
             str(frasi["cmd_progetti"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+
+    buttons.clear()
+
+    for nome_prog_mozita in liste["progetti_mozita"]:
+        buttons.append([InlineKeyboardButton(
+            nome_prog_mozita, callback_data="progetti", url=liste["progetti_mozita"][str(nome_prog_mozita)])])
+
+    buttons.append([InlineKeyboardButton(
+        str(frasi["button_back_mostra_help"]),    callback_data="help")])
+
+    reply_markup = InlineKeyboardMarkup(buttons)
+
+    if not hasattr(update.callback_query, "inline_message_id"):
+        update.message.reply_text(
+            str(frasi["cmd_progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+    else:
+        query.answer()
+        query.message.reply_text(
+            str(frasi["cmd_progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+
 
 def buttons_handler(update: Update, context: CallbackContext):
     '''Cattura il click di un bottone per generare un nuovo messaggio'''
