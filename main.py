@@ -33,7 +33,7 @@ else:
 def start(update: Update, context: CallbackContext):
     '''Comando start, mostra messaggio di benvenuto e indirizza al menu'''
     buttons = [
-        [InlineKeyboardButton(str(frasi["btn_start"]), callback_data="help")]]
+        [InlineKeyboardButton(str(frasi["button_start"]), callback_data="help")]]
 
     reply_markup = InlineKeyboardMarkup(buttons)
     update.message.reply_text(
@@ -54,22 +54,22 @@ def help(update: Update, context: CallbackContext):
     - lascia il tuo feedback: - '''
 
     buttons = [
-        [InlineKeyboardButton(str(frasi["btn_txt_gruppi"]), callback_data="gruppi"),
+        [InlineKeyboardButton(str(frasi["button_testo_gruppi"]), callback_data="gruppi"),
          InlineKeyboardButton(
-             str(frasi["btn_txt_social"]), callback_data="social"),
-         InlineKeyboardButton(str(frasi["btn_start2"]), callback_data="supporto")],
+             str(frasi["button_testo_social"]), callback_data="social"),
+         InlineKeyboardButton(str(frasi["button_start2"]), callback_data="supporto")],
 
-        [InlineKeyboardButton(str(frasi["btn_txt_avvisi"]), callback_data="avvisi"),
+        [InlineKeyboardButton(str(frasi["button_testo_avvisi"]), callback_data="avvisi"),
          InlineKeyboardButton(
-             str(frasi["btn_txt_call"]), callback_data="meeting"),
-         InlineKeyboardButton(str(frasi["btn_txt_progetti_attivi"]), callback_data="progetti")],
+             str(frasi["button_testo_call"]), callback_data="meeting"),
+         InlineKeyboardButton(str(frasi["button_testo_progetti_attivi"]), callback_data="progetti")],
 
-        [InlineKeyboardButton(str(frasi["btn_txt_vademecum"]), callback_data="vademecum"),
+        [InlineKeyboardButton(str(frasi["button_testo_progetti_attivi"]), callback_data="vademecum"),
          InlineKeyboardButton(
-             str(frasi["btn_txt_regolamento"]), callback_data="regolamento"),
-         InlineKeyboardButton(str(frasi["btn_txt_info"]), callback_data="info")],
+             str(frasi["button_regolamento"]), callback_data="regolamento"),
+         InlineKeyboardButton(str(frasi["button_testo_info"]), callback_data="info")],
 
-        [InlineKeyboardButton(str(frasi["btn_feedback"]),
+        [InlineKeyboardButton(str(frasi["button_feedback"]),
                               callback_data="lascia_feedback")]
     ]
 
@@ -88,27 +88,43 @@ def progetti(update: Update, context: CallbackContext):
     '''Comando progetti, mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia.
     Scorre nella lista dei progetti presa dal file json e crea un bottone con link per ogni progetto.'''
 
+    query = update.callback_query
     buttons = []
+
     for nome_prog_moz in liste["progetti"]:
 
         buttons.append([InlineKeyboardButton(
             nome_prog_moz, callback_data="progetti", url=liste["progetti"][str(nome_prog_moz)])])
 
     reply_markup = InlineKeyboardMarkup(buttons)
-    update.message.reply_text(
-        str(frasi["cmd_progetti"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
 
-    buttons.clear()  # questa cosa si potrebbe fare con due variabili diverse (es. buttons e buttons2) ma in questo modo utilizzo la stessa variabile per tutti i bottoni del bot per favorire eventuali manutenzioni e sviluppi futuri
+    if not hasattr(update.callback_query, "inline_message_id"):
+        update.message.reply_text(
+            str(frasi["cmd_progetti"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+    else:
+        query.answer()
+        query.message.reply_text(
+            str(frasi["cmd_progetti"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+
+    buttons.clear()
 
     for nome_prog_mozita in liste["progetti_mozita"]:
-        buttons.append([InlineKeyboardButton(nome_prog_mozita, callback_data="progetti",
-                       url=liste["progetti_mozita"][str(nome_prog_mozita)])])
+        buttons.append([InlineKeyboardButton(
+            nome_prog_mozita, callback_data="progetti", url=liste["progetti_mozita"][str(nome_prog_mozita)])])
 
     buttons.append([InlineKeyboardButton(
-        str(frasi["btn_back_mostra_help"]),    callback_data="help")])
+        str(frasi["button_back_mostra_help"]),    callback_data="help")])
 
-    update.message.reply_text(
-        str(frasi["cmd_progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+    reply_markup = InlineKeyboardMarkup(buttons)
+
+    if not hasattr(update.callback_query, "inline_message_id"):
+        update.message.reply_text(
+            str(frasi["cmd_progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+    else:
+        query.answer()
+        query.message.reply_text(
+            str(frasi["cmd_progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+
 
 
 def handler_groups(update: Update, context: CallbackContext):
@@ -125,50 +141,50 @@ def handler_groups(update: Update, context: CallbackContext):
 
     buttons = []
     txt = ""
+      
+    if cmd == "home":
+        buttons = [
+            [InlineKeyboardButton(str(frasi["btn_home"]), url=str(
+                liste["link_gruppi"]["home"]), callback_data="home")]
+        ]
+        txt = str(frasi["cmd_home"])
 
-    match cmd:
-        case "home":
-            buttons = [
-                [InlineKeyboardButton(str(frasi["btn_home"]), url=str(
-                    liste["link_gruppi"]["home"]), callback_data="home")]
-            ]
-            txt = str(frasi["cmd_home"])
+    elif cmd == "news":
+        buttons = [
+            [InlineKeyboardButton(str(frasi["btn_news"]), url=str(
+                liste["link_gruppi"]["news"]), callback_data="news")]
+        ]
+        txt = str(frasi["cmd_news"])
 
-        case "news":
-            buttons = [
-                [InlineKeyboardButton(str(frasi["btn_news"]), url=str(
-                    liste["link_gruppi"]["news"]), callback_data="news")]
-            ]
-            txt = str(frasi["cmd_news"])
+    elif cmd == "dev" or cmd == "developers" or cmd == "sviluppo":
+        buttons = [
+            [InlineKeyboardButton(str(frasi["btn_developers"]), url=str(
+                liste["link_gruppi"]["developers"]), callback_data="dev")]
+        ]
+        txt = str(frasi["cmd_dev"])
 
-        case "dev" | "developers" | "sviluppo":
-            buttons = [
-                [InlineKeyboardButton(str(frasi["btn_developers"]), url=str(
-                    liste["link_gruppi"]["developers"]), callback_data="dev")]
-            ]
-            txt = str(frasi["cmd_dev"])
+    elif cmd == "dem" or cmd == "design" or cmd == "marketing":
+        buttons = [
+            [InlineKeyboardButton(str(frasi["btn_dem"]), url=str(
+                liste["link_gruppi"]["dem"]), callback_data="dem")]
+        ]
+        txt = str(frasi["cmd_dem"])
 
-        case "dem" | "design" | "marketing":
-            buttons = [
-                [InlineKeyboardButton(str(frasi["btn_dem"]), url=str(
-                    liste["link_gruppi"]["dem"]), callback_data="dem")]
-            ]
-            txt = str(frasi["cmd_dem"])
+    elif cmd == "lion" or cmd == "l10n":
+        buttons = [
+            [InlineKeyboardButton(str(frasi["btn_l10n"]), url=str(
+                liste["link_gruppi"]["l10n"]), callback_data="l10n")]
+        ]
+        txt = str(frasi["cmd_l10n"])
 
-        case "lion" | "l10n":
-            buttons = [
-                [InlineKeyboardButton(str(frasi["btn_l10n"]), url=str(
-                    liste["link_gruppi"]["l10n"]), callback_data="l10n")]
-            ]
-            txt = str(frasi["cmd_l10n"])
-
-        case _:
-            buttons = []
-            txt = "Caro sviluppatore, hai dimenticato di gestire questo handler. Crea un nuovo case e definisci bottone e testo.\n\n_\"Ottimo! Ma hai lasciato degli oggetti alle tue spalle...\"_\n- Merlin Munroe"
+    else:
+        buttons = []
+        txt = "Caro sviluppatore, hai dimenticato di gestire questo handler. Crea un nuovo case e definisci bottone e testo.\n\n_\"Ottimo! Ma hai lasciato degli oggetti alle tue spalle...\"_\n- Merlin Munroe"
 
     reply_markup = InlineKeyboardMarkup(buttons)
     update.message.reply_text(
         txt, reply_markup=reply_markup, parse_mode="MARKDOWN")
+
 
 
 def buttons_handler(update: Update, context: CallbackContext):
@@ -180,53 +196,56 @@ def buttons_handler(update: Update, context: CallbackContext):
     if str(query.data).lower() == "help":
         query.message.reply_markdown(str(frasi["cmd_help"]))
         buttons = [
-            [InlineKeyboardButton(str(frasi["btn_txt_gruppi"]), callback_data="gruppi"),
+            [InlineKeyboardButton(str(frasi["button_testo_gruppi"]), callback_data="gruppi"),
              InlineKeyboardButton(
-                 str(frasi["btn_txt_social"]), callback_data="social"),
-             InlineKeyboardButton(str(frasi["btn_start2"]), callback_data="supporto")],
+                 str(frasi["button_testo_social"]), callback_data="social"),
+             InlineKeyboardButton(str(frasi["button_start2"]), callback_data="supporto")],
 
-            [InlineKeyboardButton(str(frasi["btn_txt_avvisi"]), callback_data="avvisi"),
+            [InlineKeyboardButton(str(frasi["button_testo_avvisi"]), callback_data="avvisi"),
              InlineKeyboardButton(
-                 str(frasi["btn_txt_call"]), callback_data="meeting"),
-             InlineKeyboardButton(str(frasi["btn_txt_progetti_attivi"]), callback_data="progetti")],
+                 str(frasi["button_testo_call"]), callback_data="meeting"),
+             InlineKeyboardButton(str(frasi["button_testo_progetti_attivi"]), callback_data="progetti")],
 
-            [InlineKeyboardButton(str(frasi["btn_txt_vademecum"]), callback_data="vademecum"),
+            [InlineKeyboardButton(str(frasi["button_testo_vademecum"]), callback_data="vademecum"),
              InlineKeyboardButton(
-                 str(frasi["btn_txt_regolamento"]), callback_data="regolamento"),
-             InlineKeyboardButton(str(frasi["btn_txt_info"]), callback_data="info")],
+                 str(frasi["button_testo_regolamento"]), callback_data="regolamento"),
+             InlineKeyboardButton(str(frasi["button_testo_info"]), callback_data="info")],
 
             [InlineKeyboardButton(
-                str(frasi["btn_feedback"]), callback_data="lascia_feedback")]
+                str(frasi["button_feedback"]), callback_data="lascia_feedback")]
         ]
 
         reply_markup = InlineKeyboardMarkup(buttons)
         query.message.reply_text(
-            str(frasi["cmd_help2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+            str(frasi["cmd_help2"]), reply_markup=reply_markup)
 
     elif str(query.data).lower() == "supporto":
         buttons = [
-            [InlineKeyboardButton(str(frasi["btn_support"]), url=str(liste["link_gruppi"]["home"])),
-             InlineKeyboardButton(str(frasi["btn_support2"]), callback_data="forum")],
-            [InlineKeyboardButton(str(frasi["btn_support3"]),
+            [InlineKeyboardButton(str(frasi["button_support"]), url="https://t.me/joinchat/BCql3UMy26nl4qxuRecDsQ"),
+             InlineKeyboardButton(str(frasi["button_support2"]), callback_data="forum")],
+            [InlineKeyboardButton(str(frasi["button_support3"]),
                                   url="https://forum.mozillaitalia.org/index.php?board=9.0")],
             [InlineKeyboardButton(
-                str(frasi["btn_back_mostra_help"]), callback_data="help")]
+                str(frasi["button_back_mostra_help"]), callback_data="help")]
         ]
 
         reply_markup = InlineKeyboardMarkup(buttons)
         query.message.reply_markdown(
-            str(frasi["cmd_supporto"]),  reply_markup=reply_markup, parse_mode="MARKDOWN")
+            str(frasi["cmd_supporto"]),  reply_markup=reply_markup)
 
     elif str(query.data).lower() == "forum":
         buttons = [
-            [InlineKeyboardButton(str(frasi["btn_forum"]),
+            [InlineKeyboardButton(str(frasi["button_forum"]),
                                   url="https://forum.mozillaitalia.org/")],
-            [InlineKeyboardButton(str(frasi["btn_back_mostra_help"]), callback_data="help")]]
+            [InlineKeyboardButton(str(frasi["button_back_mostra_help"]), callback_data="help")]]
 
         reply_markup = InlineKeyboardMarkup(buttons)
         query.message.reply_markdown(
-            str(frasi["forum"]),  reply_markup=reply_markup, parse_mode="MARKDOWN")
+            str(frasi["forum"]),  reply_markup=reply_markup)
 
+    elif str(query.data).lower() == "progetti":
+        buttons = []
+        progetti(update, context)
 
 def main() -> None:
 
