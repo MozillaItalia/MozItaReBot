@@ -126,7 +126,6 @@ def progetti(update: Update, context: CallbackContext):
             str(frasi["cmd_progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
 
 
-
 def handler_groups(update: Update, context: CallbackContext):
     '''
         Handler per tutti i comandi dei gruppi. Restituisce un messaggio di testo e un bottone con un link al gruppo scelto.
@@ -141,7 +140,7 @@ def handler_groups(update: Update, context: CallbackContext):
 
     buttons = []
     txt = ""
-      
+
     if cmd == "home":
         buttons = [
             [InlineKeyboardButton(str(frasi["btn_home"]), url=str(
@@ -184,7 +183,6 @@ def handler_groups(update: Update, context: CallbackContext):
     reply_markup = InlineKeyboardMarkup(buttons)
     update.message.reply_text(
         txt, reply_markup=reply_markup, parse_mode="MARKDOWN")
-
 
 
 def buttons_handler(update: Update, context: CallbackContext):
@@ -246,6 +244,7 @@ def buttons_handler(update: Update, context: CallbackContext):
     elif str(query.data).lower() == "progetti":
         buttons = []
         progetti(update, context)
+
 
 def main() -> None:
 
