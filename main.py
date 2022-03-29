@@ -219,7 +219,7 @@ def buttons_handler(update: Update, context: CallbackContext):
 
     elif str(query.data).lower() == "supporto":
         buttons = [
-            [InlineKeyboardButton(str(frasi["button_support"]), url="https://t.me/joinchat/BCql3UMy26nl4qxuRecDsQ"),
+            [InlineKeyboardButton(str(frasi["button_support"]), url=str(liste["link_gruppi"]["home"])),
              InlineKeyboardButton(str(frasi["button_support2"]), callback_data="forum")],
             [InlineKeyboardButton(str(frasi["button_support3"]),
                                   url="https://forum.mozillaitalia.org/index.php?board=9.0")],
