@@ -16,6 +16,8 @@ pip install -r requirements.txt
 3. Creare un .env contenente il token del bot
 4. Lanciare il file contenente il main
 
+## Come contribuire
+Dare un'occhiata al file [CONTRIBUTING.md](https://github.com/dag7dev/MozItaReBot/blob/master/CONTRIBUTING.md)
 
 ## Comandi
 | Comando | Funzionamento |
