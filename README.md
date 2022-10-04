@@ -17,7 +17,7 @@ pip install -r requirements.txt
 4. Lanciare il file contenente il main
 
 ## Come contribuire
-Dare un'occhiata al file [CONTRIBUTING.md](https://github.com/dag7dev/MozItaReBot/blob/master/CONTRIBUTING.md)
+Dare un'occhiata al file [CONTRIBUTING.md](https://github.com/dag7dev/MozItaReBot/blob/master/CONTRIBUTING.md) o al [quadro generale della situazione](https://github.com/dag7dev/MozItaReBot/issues/1) dove sono spiegate alcune cose che bisogna fare.
 
 ## Comandi
 | Comando | Funzionamento |
