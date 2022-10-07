@@ -39,7 +39,7 @@ phrases_starts = frasi['starts']
 def start(update: Update, context: CallbackContext):
     '''Comando start, mostra messaggio di benvenuto e indirizza al menu'''
     buttons = [
-        [InlineKeyboardButton(str(phrases_buttons["button_start"]), callback_data="help")]]
+        [InlineKeyboardButton(str(phrases_buttons["start"]), callback_data="help")]]
 
     reply_markup = InlineKeyboardMarkup(buttons)
     update.message.reply_text(
