@@ -11,7 +11,7 @@ from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandl
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
 load_dotenv()
-TOKEN = os.getenv("TESTTOKEN")
+TOKEN = os.getenv("TOKEN")
 
 
 json_frasi_path = "./json/frasi.json"

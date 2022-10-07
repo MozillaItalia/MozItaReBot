@@ -1,7 +1,7 @@
 # MozItaReBot
 Bot comunitario di [https://github.com/MozillaItalia](https://mozillaitalia.github.io), invia e mostra link e informazioni utili.
 
-Riscrittura in Python con una libreria più aggiornata, progetto originale: [mozitaantispam_bot](https://github.com/MozillaItalia/mozitahub_bot) 
+Riscrittura in Python con una libreria più aggiornata, progetto originale: [mozitahub_bot](https://github.com/MozillaItalia/mozitahub_bot) 
 
 ## Requirements
 - Python 3
