@@ -8,7 +8,7 @@ from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandl
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
 from src.reader import ListReader, PhrasesReader
-from src.commands import start, help, unknown, progetti, groups
+from src.commands import rules, start, help, unknown, progetti, groups, rules
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
@@ -99,9 +99,9 @@ def buttons_handler(update: Update, context: CallbackContext):
     query.answer()
 
     logging.debug(f'Cliked buttons: {query.data}')
-    cliked_button = str(query.data).lower()
+    clicked_button = str(query.data).lower()
 
-    if cliked_button == "help":
+    if clicked_button == "help":
         query.message.reply_markdown(str(phrases_commands["help"]))
         buttons = [
             [InlineKeyboardButton(str(phrases_buttons["testo_gruppi"]), callback_data="gruppi"),
@@ -127,7 +127,7 @@ def buttons_handler(update: Update, context: CallbackContext):
         query.message.reply_text(
             str(phrases_commands["help2"]), reply_markup=reply_markup)
 
-    elif cliked_button == "supporto":
+    elif clicked_button == "supporto":
         buttons = [
             [InlineKeyboardButton(str(phrases_buttons["support"]), url=str(liste["link_gruppi"]["home"])),
              InlineKeyboardButton(str(phrases_buttons["support2"]), callback_data="forum")],
@@ -141,7 +141,7 @@ def buttons_handler(update: Update, context: CallbackContext):
         query.message.reply_markdown(
             str(phrases_commands["supporto"]),  reply_markup=reply_markup)
 
-    elif cliked_button == "forum":
+    elif clicked_button == "forum":
         buttons = [
             [InlineKeyboardButton(str(phrases_buttons["forum"]),
                                   url="https://forum.mozillaitalia.org/")],
@@ -151,12 +151,15 @@ def buttons_handler(update: Update, context: CallbackContext):
         query.message.reply_markdown(
             str(phrases_locations["forum"]),  reply_markup=reply_markup)
 
-    elif cliked_button == "progetti":
+    elif clicked_button == "progetti":
         buttons = []
         progetti(update, context)
 
-    elif cliked_button == 'gruppi':
+    elif clicked_button == 'gruppi':
         groups(update, context)
+
+    elif clicked_button == 'regolamento':
+        rules(update, context)
 
     else:
         unknown(update, context)
