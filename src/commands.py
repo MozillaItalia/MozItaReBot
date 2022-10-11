@@ -15,6 +15,18 @@ phrases_starts = phrases_reader.get_starts()
 lists_reader = ListReader()
 liste = lists_reader.get_lists()
 
+
+def _reply(update: Update, text: str, reply_markup: InlineKeyboardMarkup, parse_mode='MARKDOWN'):
+    if not hasattr(update.callback_query, "inline_message_id"):
+        update.message.reply_text(
+            text, reply_markup=reply_markup, parse_mode=parse_mode)
+    else:
+        query = update.callback_query
+        query.answer()
+        query.message.reply_text(
+            text, reply_markup=reply_markup, parse_mode=parse_mode)
+
+
 def start(update: Update, context: CallbackContext):
     '''Comando start, mostra messaggio di benvenuto e indirizza al menu'''
     buttons = [
@@ -66,13 +78,7 @@ def help(update: Update, context: CallbackContext):
 
 def unknown(update: Update, context: CallbackContext):
     '''In caso il comando passato non venga riconosciuto, restituisce un opportuno messaggio di errore'''
-    query = update.callback_query
-    if not hasattr(update.callback_query, "inline_message_id"):
-        update.message.reply_text(phrases_commands["comando_non_riconosciuto"])
-    else:
-        query.answer()
-        query.message.reply_text(
-            str(phrases_commands["comando_non_riconosciuto"]),)
+    _reply(update, phrases_commands["comando_non_riconosciuto"], None)
 
 
 def progetti(update: Update, context: CallbackContext):
@@ -115,3 +121,18 @@ def progetti(update: Update, context: CallbackContext):
         query.answer()
         query.message.reply_text(
             str(phrases_commands["progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+
+
+def groups(update: Update, context: CallbackContext):
+    buttons = []
+    for group_name in liste['link_gruppi'].keys():
+        buttons.append(
+            [InlineKeyboardButton(
+                text=group_name, callback_data=group_name, url=liste['link_gruppi'][group_name])]
+        )
+
+    buttons.append([InlineKeyboardButton(
+        phrases_buttons["back_mostra_help"], callback_data="help")])
+    reply_markup = InlineKeyboardMarkup(buttons)
+
+    _reply(update, phrases_commands["gruppi"], reply_markup)
