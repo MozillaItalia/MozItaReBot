@@ -1,135 +1,35 @@
 import os
-import sys
-import json
-from pathlib import Path
 
 from dotenv import load_dotenv
 import logging
 from telegram.update import Update
 from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandler,
-                          ConversationHandler, Filters, CallbackContext, CallbackQueryHandler)
+                          Filters, CallbackContext, CallbackQueryHandler)
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
+from src.reader import ListReader, PhrasesReader
+from src.commands import rules, start, help, unknown, progetti, groups, rules
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
+# logging.basicConfig(level=logging.DEBUG)
 
-json_frasi_path = "./json/frasi.json"
-json_liste_path = "./json/liste.json"
-
-if Path(json_frasi_path).exists():
-    frasi = json.loads(open(json_frasi_path, encoding="utf8").read())
-else:
-    print("File frasi non presente.")
+try:
+    phrases_reader = PhrasesReader()
+    phrases_notices = phrases_reader.get_notices()
+    phrases_buttons = phrases_reader.get_buttons()
+    phrases_commands = phrases_reader.get_commands()
+    phrases_locations = phrases_reader.get_locations()
+    phrases_actions = phrases_reader.get_actions()
+    phrases_starts = phrases_reader.get_starts()
+except FileNotFoundError:
     exit()
 
-if Path(json_liste_path).exists():
-    liste = json.loads(open(json_liste_path, encoding="utf8").read())
-else:
-    print("File liste non presente.")
+try:
+    lists_reader = ListReader()
+    liste = lists_reader.get_lists()
+except FileNotFoundError:
     exit()
-
-phrases_notices = frasi['notices']
-phrases_buttons = frasi['buttons']
-phrases_commands = frasi['commands']
-phrases_locations = frasi['locations']
-phrases_actions = frasi['actions']
-phrases_starts = frasi['starts']
-
-def start(update: Update, context: CallbackContext):
-    '''Comando start, mostra messaggio di benvenuto e indirizza al menu'''
-    buttons = [
-        [InlineKeyboardButton(str(phrases_buttons["start"]), callback_data="help")]]
-
-    reply_markup = InlineKeyboardMarkup(buttons)
-    update.message.reply_text(
-        str(phrases_starts["start"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
-
-
-def help(update: Update, context: CallbackContext):
-    '''Comando help, spiega cosa fanno i vari comandi e mostra i menu con le varie funzioni:
-    - gruppi: reindirizza ai vari gruppi della community
-    - social: reindirizza ai canali social della community
-    - ho bisogno di assistenza: reindirizza ad un messaggio di aiuto
-    - avvisi: -
-    - meeting: -
-    - \ attivi: mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia
-    - vademecum: -
-    - regolamento: -
-    - info: -
-    - lascia il tuo feedback: - '''
-
-    buttons = [
-        [InlineKeyboardButton(str(phrases_buttons["testo_gruppi"]), callback_data="gruppi"),
-         InlineKeyboardButton(
-             str(phrases_buttons["testo_social"]), callback_data="social"),
-         InlineKeyboardButton(str(phrases_buttons["start2"]), callback_data="supporto")],
-
-        [InlineKeyboardButton(str(phrases_buttons["testo_avvisi"]), callback_data="avvisi"),
-         InlineKeyboardButton(
-             str(phrases_buttons["testo_call"]), callback_data="meeting"),
-         InlineKeyboardButton(str(phrases_buttons["testo_progetti_attivi"]), callback_data="progetti")],
-
-        [InlineKeyboardButton(str(phrases_buttons["testo_progetti_attivi"]), callback_data="vademecum"),
-         InlineKeyboardButton(
-             str(phrases_buttons["regolamento"]), callback_data="regolamento"),
-         InlineKeyboardButton(str(phrases_buttons["testo_info"]), callback_data="info")],
-
-        [InlineKeyboardButton(str(phrases_buttons["feedback"]),
-                              callback_data="lascia_feedback")]
-    ]
-
-    reply_markup = InlineKeyboardMarkup(buttons)
-    update.message.reply_markdown(str(phrases_commands["help"]))
-    update.message.reply_text(
-        str(phrases_commands["help2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
-
-
-def unknown(update: Update, context: CallbackContext):
-    '''In caso il comando passato non venga riconosciuto, restituisce un opportuno messaggio di errore'''
-    update.message.reply_text(phrases_commands["comando_non_riconosciuto"])
-
-
-def progetti(update: Update, context: CallbackContext):
-    '''Comando progetti, mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia.
-    Scorre nella lista dei progetti presa dal file json e crea un bottone con link per ogni progetto.'''
-
-    query = update.callback_query
-    buttons = []
-
-    for nome_prog_moz in liste["progetti"]:
-
-        buttons.append([InlineKeyboardButton(
-            nome_prog_moz, callback_data="progetti", url=liste["progetti"][str(nome_prog_moz)])])
-
-    reply_markup = InlineKeyboardMarkup(buttons)
-
-    if not hasattr(update.callback_query, "inline_message_id"):
-        update.message.reply_text(
-            str(phrases_commands["progetti"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
-    else:
-        query.answer()
-        query.message.reply_text(
-            str(phrases_commands["progetti"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
-
-    buttons.clear()
-
-    for nome_prog_mozita in liste["progetti_mozita"]:
-        buttons.append([InlineKeyboardButton(
-            nome_prog_mozita, callback_data="progetti", url=liste["progetti_mozita"][str(nome_prog_mozita)])])
-
-    buttons.append([InlineKeyboardButton(
-        str(phrases_buttons["back_mostra_help"]),    callback_data="help")])
-
-    reply_markup = InlineKeyboardMarkup(buttons)
-
-    if not hasattr(update.callback_query, "inline_message_id"):
-        update.message.reply_text(
-            str(phrases_commands["progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
-    else:
-        query.answer()
-        query.message.reply_text(
-            str(phrases_commands["progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
 
 
 def handler_groups(update: Update, context: CallbackContext):
@@ -195,9 +95,13 @@ def buttons_handler(update: Update, context: CallbackContext):
     '''Cattura il click di un bottone per generare un nuovo messaggio'''
 
     query = update.callback_query
+
     query.answer()
 
-    if str(query.data).lower() == "help":
+    logging.debug(f'Cliked buttons: {query.data}')
+    clicked_button = str(query.data).lower()
+
+    if clicked_button == "help":
         query.message.reply_markdown(str(phrases_commands["help"]))
         buttons = [
             [InlineKeyboardButton(str(phrases_buttons["testo_gruppi"]), callback_data="gruppi"),
@@ -223,7 +127,7 @@ def buttons_handler(update: Update, context: CallbackContext):
         query.message.reply_text(
             str(phrases_commands["help2"]), reply_markup=reply_markup)
 
-    elif str(query.data).lower() == "supporto":
+    elif clicked_button == "supporto":
         buttons = [
             [InlineKeyboardButton(str(phrases_buttons["support"]), url=str(liste["link_gruppi"]["home"])),
              InlineKeyboardButton(str(phrases_buttons["support2"]), callback_data="forum")],
@@ -237,7 +141,7 @@ def buttons_handler(update: Update, context: CallbackContext):
         query.message.reply_markdown(
             str(phrases_commands["supporto"]),  reply_markup=reply_markup)
 
-    elif str(query.data).lower() == "forum":
+    elif clicked_button == "forum":
         buttons = [
             [InlineKeyboardButton(str(phrases_buttons["forum"]),
                                   url="https://forum.mozillaitalia.org/")],
@@ -247,9 +151,18 @@ def buttons_handler(update: Update, context: CallbackContext):
         query.message.reply_markdown(
             str(phrases_locations["forum"]),  reply_markup=reply_markup)
 
-    elif str(query.data).lower() == "progetti":
+    elif clicked_button == "progetti":
         buttons = []
         progetti(update, context)
+
+    elif clicked_button == 'gruppi':
+        groups(update, context)
+
+    elif clicked_button == 'regolamento':
+        rules(update, context)
+
+    else:
+        unknown(update, context)
 
 
 def main() -> None:
