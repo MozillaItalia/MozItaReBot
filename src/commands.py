@@ -148,7 +148,6 @@ def feedback(update: Update, context: CallbackContext):
     reply_markup = InlineKeyboardMarkup(buttons)
     _reply(update, phrases_commands["feedback"], reply_markup)
 
-   
 
 def rules(update: Update, context: CallbackContext):
     _reply(update, phrases_commands["regolamento"], None)

@@ -8,7 +8,7 @@ from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandl
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
 from src.reader import ListReader, PhrasesReader
-from src.commands import rules, start, help, unknown, progetti, groups, rules, feedback
+from src.commands import rules, start, help, unknown, progetti, groups, feedback
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
@@ -188,7 +188,6 @@ def main() -> None:
     dp.add_handler(CommandHandler("dev", handler_groups))
     dp.add_handler(CommandHandler("developers", handler_groups))
     dp.add_handler(CommandHandler("sviluppo", handler_groups))
-
 
     dp.add_handler(CommandHandler("dem", handler_groups))
     dp.add_handler(CommandHandler("design", handler_groups))
