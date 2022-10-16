@@ -67,7 +67,7 @@ def help(update: Update, context: CallbackContext):
          InlineKeyboardButton(str(phrases_buttons["testo_info"]), callback_data="info")],
 
         [InlineKeyboardButton(str(phrases_buttons["feedback"]),
-                              callback_data="lascia_feedback")]
+                              callback_data="feedback")]
     ]
 
     reply_markup = InlineKeyboardMarkup(buttons)
@@ -140,9 +140,7 @@ def groups(update: Update, context: CallbackContext):
 
 def feedback(update: Update, context: CallbackContext):
     buttons = [
-        [InlineKeyboardButton(str(phrases_buttons["feedback"]), callback_data="feedback1", url=str(
-            liste["link_gruppi"]["home"]))],
-        [InlineKeyboardButton(str(phrases_buttons["feedback2"]),  callback_data="feedback2",  url=str(
+        [InlineKeyboardButton(str(phrases_buttons["feedback"]), callback_data="feedback", url=str(
             liste["link_gruppi"]["home"]))],
         [InlineKeyboardButton(str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
     reply_markup = InlineKeyboardMarkup(buttons)
