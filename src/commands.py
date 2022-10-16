@@ -138,5 +138,17 @@ def groups(update: Update, context: CallbackContext):
     _reply(update, phrases_commands["gruppi"], reply_markup)
 
 
+def feedback(update: Update, context: CallbackContext):
+    buttons = [
+        [InlineKeyboardButton(str(phrases_buttons["feedback"]), callback_data="feedback1", url=str(
+            liste["link_gruppi"]["home"]))],
+        [InlineKeyboardButton(str(phrases_buttons["feedback2"]),  callback_data="feedback2",  url=str(
+            liste["link_gruppi"]["home"]))],
+        [InlineKeyboardButton(str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
+    reply_markup = InlineKeyboardMarkup(buttons)
+    _reply(update, phrases_commands["feedback"], reply_markup)
+
+   
+
 def rules(update: Update, context: CallbackContext):
     _reply(update, phrases_commands["regolamento"], None)

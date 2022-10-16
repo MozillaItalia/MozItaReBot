@@ -8,7 +8,7 @@ from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandl
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
 from src.reader import ListReader, PhrasesReader
-from src.commands import rules, start, help, unknown, progetti, groups, rules
+from src.commands import rules, start, help, unknown, progetti, groups, rules, feedback
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
@@ -81,7 +81,6 @@ def handler_groups(update: Update, context: CallbackContext):
                 liste["link_gruppi"]["l10n"]), callback_data="l10n")]
         ]
         txt = str(phrases_commands["l10n"])
-
     else:
         buttons = []
         txt = "Caro sviluppatore, hai dimenticato di gestire questo handler. Crea un nuovo case e definisci bottone e testo.\n\n_\"Ottimo! Ma hai lasciato degli oggetti alle tue spalle...\"_\n- Merlin Munroe"
@@ -120,7 +119,7 @@ def buttons_handler(update: Update, context: CallbackContext):
              InlineKeyboardButton(str(phrases_buttons["testo_info"]), callback_data="info")],
 
             [InlineKeyboardButton(
-                str(phrases_buttons["feedback"]), callback_data="lascia_feedback")]
+                str(phrases_buttons["feedback"]), callback_data="feedback")]
         ]
 
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -160,7 +159,8 @@ def buttons_handler(update: Update, context: CallbackContext):
 
     elif clicked_button == 'regolamento':
         rules(update, context)
-
+    elif clicked_button == 'feedback':
+        feedback(update, context)
     else:
         unknown(update, context)
 
@@ -173,6 +173,7 @@ def main() -> None:
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("progetti", progetti))
+    dp.add_handler(CommandHandler("feedback", feedback))
 
     # comandi che rimandano a gruppi (comandi redirect)
     # alias:
@@ -187,6 +188,7 @@ def main() -> None:
     dp.add_handler(CommandHandler("dev", handler_groups))
     dp.add_handler(CommandHandler("developers", handler_groups))
     dp.add_handler(CommandHandler("sviluppo", handler_groups))
+
 
     dp.add_handler(CommandHandler("dem", handler_groups))
     dp.add_handler(CommandHandler("design", handler_groups))
