@@ -30,11 +30,9 @@ def _reply(update: Update, text: str, reply_markup: InlineKeyboardMarkup, parse_
 def start(update: Update, context: CallbackContext):
     '''Comando start, mostra messaggio di benvenuto e indirizza al menu'''
     buttons = [
-        [InlineKeyboardButton(str(phrases_buttons["start"]), callback_data="help")]]
-
+        [InlineKeyboardButton(phrases_buttons["start"], callback_data="help")]]
     reply_markup = InlineKeyboardMarkup(buttons)
-    update.message.reply_text(
-        str(phrases_starts["start"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+    _reply(update, phrases_starts["start"], reply_markup)
 
 
 def help(update: Update, context: CallbackContext):
@@ -71,9 +69,9 @@ def help(update: Update, context: CallbackContext):
     ]
 
     reply_markup = InlineKeyboardMarkup(buttons)
-    update.message.reply_markdown(str(phrases_commands["help"]))
-    update.message.reply_text(
-        str(phrases_commands["help2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+
+    _reply(update, phrases_commands["help"], None)
+    _reply(update, phrases_commands["help2"], reply_markup)
 
 
 def unknown(update: Update, context: CallbackContext):
@@ -94,14 +92,7 @@ def progetti(update: Update, context: CallbackContext):
             nome_prog_moz, callback_data="progetti", url=liste["progetti"][str(nome_prog_moz)])])
 
     reply_markup = InlineKeyboardMarkup(buttons)
-
-    if not hasattr(update.callback_query, "inline_message_id"):
-        update.message.reply_text(
-            str(phrases_commands["progetti"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
-    else:
-        query.answer()
-        query.message.reply_text(
-            str(phrases_commands["progetti"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+    _reply(update, phrases_commands["progetti"], reply_markup)
 
     buttons.clear()
 
@@ -113,14 +104,7 @@ def progetti(update: Update, context: CallbackContext):
         str(phrases_buttons["back_mostra_help"]),    callback_data="help")])
 
     reply_markup = InlineKeyboardMarkup(buttons)
-
-    if not hasattr(update.callback_query, "inline_message_id"):
-        update.message.reply_text(
-            str(phrases_commands["progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
-    else:
-        query.answer()
-        query.message.reply_text(
-            str(phrases_commands["progetti2"]), reply_markup=reply_markup, parse_mode="MARKDOWN")
+    _reply(update, phrases_commands["progetti2"], reply_markup)
 
 
 def groups(update: Update, context: CallbackContext):
