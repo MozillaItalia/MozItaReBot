@@ -1,10 +1,11 @@
 import os
+from typing import Optional
 
 from dotenv import load_dotenv
 import logging
 from telegram.update import Update
 from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandler,
-                          Filters, CallbackContext, CallbackQueryHandler)
+                          Filters, CallbackQueryHandler)
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
 from src.reader import ListReader, PhrasesReader
@@ -165,14 +166,16 @@ def buttons_handler(update: Update, context: CallbackContext):
         unknown(update, context)
 
 
-def main() -> None:
+def start_bot(token:str, base_url:str=None) -> None:
 
-    updater = Updater(str(TOKEN))
-    dp = updater.dispatcher
+    updater = Updater(token, base_url)
+    dispatcher = updater.dispatcher
 
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(CommandHandler("progetti", progetti))
+    dispatcher.add_handler(CommandHandler("start", start))
+    dispatcher.add_handler(CommandHandler("help", help))
+    dispatcher.add_handler(CommandHandler("progetti", progetti))
+    dispatcher.add_handler(CommandHandler("gruppi", groups))
+    dispatcher.add_handler(CommandHandler("regolamento", rules))
 
     # comandi che rimandano a gruppi (comandi redirect)
     # alias:
@@ -181,26 +184,32 @@ def main() -> None:
     #       Ex. /sviluppo e /dev hanno lo stesso comportamento.
     # nota:
     #       ogni alias va aggiunto nell'handler, altrimenti non succederà nulla
-    dp.add_handler(CommandHandler("home", handler_groups))
-    dp.add_handler(CommandHandler("news", handler_groups))
 
-    dp.add_handler(CommandHandler("dev", handler_groups))
-    dp.add_handler(CommandHandler("developers", handler_groups))
-    dp.add_handler(CommandHandler("sviluppo", handler_groups))
+    dispatcher.add_handler(CommandHandler("home", handler_groups))
+    dispatcher.add_handler(CommandHandler("news", handler_groups))
 
-    dp.add_handler(CommandHandler("dem", handler_groups))
-    dp.add_handler(CommandHandler("design", handler_groups))
-    dp.add_handler(CommandHandler("marketing", handler_groups))
-    dp.add_handler(CommandHandler("designmarketing", handler_groups))
+    dispatcher.add_handler(CommandHandler("dev", handler_groups))
+    dispatcher.add_handler(CommandHandler("developers", handler_groups))
+    dispatcher.add_handler(CommandHandler("sviluppo", handler_groups))
 
-    dp.add_handler(CommandHandler("lion", handler_groups))
-    dp.add_handler(CommandHandler("l10n", handler_groups))
+    dispatcher.add_handler(CommandHandler("dem", handler_groups))
+    dispatcher.add_handler(CommandHandler("design", handler_groups))
+    dispatcher.add_handler(CommandHandler("marketing", handler_groups))
+    dispatcher.add_handler(CommandHandler("designmarketing", handler_groups))
 
-    dp.add_handler(MessageHandler(Filters.text, unknown))
-    dp.add_handler(MessageHandler(Filters.command, unknown))
-    dp.add_handler(CallbackQueryHandler(buttons_handler))
+    dispatcher.add_handler(CommandHandler("lion", handler_groups))
+    dispatcher.add_handler(CommandHandler("l10n", handler_groups))
+
+    dispatcher.add_handler(MessageHandler(Filters.text, unknown))
+    dispatcher.add_handler(MessageHandler(Filters.command, unknown))
+    dispatcher.add_handler(CallbackQueryHandler(buttons_handler))
 
     updater.start_polling()
+
+    return updater
+
+def main() -> None:
+    updater = start_bot(TOKEN, )
     updater.idle()
 
 
