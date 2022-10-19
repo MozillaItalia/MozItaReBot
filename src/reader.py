@@ -5,6 +5,7 @@ from pathlib import Path
 
 logger = logging.getLogger()
 
+
 class BaseReader():
     FILE_PATH = ''
     data = None
@@ -22,7 +23,8 @@ class BaseReader():
                 self.data = json.loads(
                     open(self.FILE_PATH, encoding="utf8").read())
             else:
-                logger.error(f'File: {os.path.basename(self.FILE_PATH)} non trovato ') 
+                logger.error(
+                    f'File: {os.path.basename(self.FILE_PATH)} non trovato ')
                 raise FileNotFoundError
         return self.data
 
