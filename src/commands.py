@@ -41,12 +41,10 @@ def help(update: Update, context: CallbackContext):
     - social: reindirizza ai canali social della community
     - ho bisogno di assistenza: reindirizza ad un messaggio di aiuto
     - avvisi: -
-    - meeting: -
     - \ attivi: mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia
-    - vademecum: -
     - regolamento: -
     - info: -
-    - lascia il tuo feedback: - '''
+    - lascia il tuo feedback: reinderizza al gruppo home  '''
 
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["testo_gruppi"]), callback_data="gruppi"),
@@ -55,14 +53,11 @@ def help(update: Update, context: CallbackContext):
          InlineKeyboardButton(str(phrases_buttons["start2"]), callback_data="supporto")],
 
         [InlineKeyboardButton(str(phrases_buttons["testo_avvisi"]), callback_data="avvisi"),
-         InlineKeyboardButton(
-             str(phrases_buttons["testo_call"]), callback_data="meeting"),
          InlineKeyboardButton(str(phrases_buttons["testo_progetti_attivi"]), callback_data="progetti")],
 
-        [InlineKeyboardButton(str(phrases_buttons["testo_progetti_attivi"]), callback_data="vademecum"),
-         InlineKeyboardButton(
-             str(phrases_buttons["regolamento"]), callback_data="regolamento"),
-         InlineKeyboardButton(str(phrases_buttons["testo_info"]), callback_data="info")],
+        [InlineKeyboardButton(
+            str(phrases_buttons["regolamento"]), callback_data="regolamento"),
+            InlineKeyboardButton(str(phrases_buttons["testo_info"]), callback_data="info")],
 
         [InlineKeyboardButton(str(phrases_buttons["feedback"]),
                               callback_data="feedback")]
@@ -108,6 +103,7 @@ def progetti(update: Update, context: CallbackContext):
 
 
 def groups(update: Update, context: CallbackContext):
+    '''Stampa la lista dei gruppi della community, com rispettivo buttone che reinderizza al rispettivo gruppo.'''
     buttons = []
     for group_name in liste['link_gruppi'].keys():
         buttons.append(
@@ -123,6 +119,7 @@ def groups(update: Update, context: CallbackContext):
 
 
 def feedback(update: Update, context: CallbackContext):
+    '''Reinderizza l'utente al gruppo Home tramite un bottone.'''
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["feedback"]), callback_data="feedback", url=str(
             liste["link_gruppi"]["home"]))],

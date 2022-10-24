@@ -110,13 +110,10 @@ def buttons_handler(update: Update, context: CallbackContext):
              InlineKeyboardButton(str(phrases_buttons["start2"]), callback_data="supporto")],
 
             [InlineKeyboardButton(str(phrases_buttons["testo_avvisi"]), callback_data="avvisi"),
-             InlineKeyboardButton(
-                 str(phrases_buttons["testo_call"]), callback_data="meeting"),
              InlineKeyboardButton(str(phrases_buttons["testo_progetti_attivi"]), callback_data="progetti")],
 
-            [InlineKeyboardButton(str(phrases_buttons["testo_vademecum"]), callback_data="vademecum"),
-             InlineKeyboardButton(
-                 str(phrases_buttons["testo_regolamento"]), callback_data="regolamento"),
+            [InlineKeyboardButton(
+                str(phrases_buttons["testo_regolamento"]), callback_data="regolamento"),
              InlineKeyboardButton(str(phrases_buttons["testo_info"]), callback_data="info")],
 
             [InlineKeyboardButton(
@@ -166,7 +163,7 @@ def buttons_handler(update: Update, context: CallbackContext):
         unknown(update, context)
 
 
-def start_bot(token:str, base_url:str=None) -> None:
+def start_bot(token: str, base_url: str = None) -> None:
 
     updater = Updater(token, base_url)
     dispatcher = updater.dispatcher
@@ -176,7 +173,6 @@ def start_bot(token:str, base_url:str=None) -> None:
     dispatcher.add_handler(CommandHandler("progetti", progetti))
     dispatcher.add_handler(CommandHandler("gruppi", groups))
     dispatcher.add_handler(CommandHandler("regolamento", rules))
-
 
     # comandi che rimandano a gruppi (comandi redirect)
     # alias:
@@ -208,6 +204,7 @@ def start_bot(token:str, base_url:str=None) -> None:
     updater.start_polling()
 
     return updater
+
 
 def main() -> None:
     updater = start_bot(TOKEN, )
