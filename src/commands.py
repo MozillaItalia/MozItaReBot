@@ -131,5 +131,20 @@ def feedback(update: Update, context: CallbackContext):
     _reply(update, phrases_commands["feedback"], reply_markup)
 
 
+def social(update: Update, context: CallbackContext):
+    buttons = []
+    for social_name in liste['social'].keys():
+        buttons.append(
+            [InlineKeyboardButton(
+                text=social_name, callback_data=social_name, url=liste['social'][social_name])]
+        )
+
+    buttons.append([InlineKeyboardButton(
+        phrases_buttons["back_mostra_help"], callback_data="help")])
+    reply_markup = InlineKeyboardMarkup(buttons)
+
+    _reply(update, phrases_commands["social"], reply_markup)
+
+
 def rules(update: Update, context: CallbackContext):
     _reply(update, phrases_commands["regolamento"], None)
