@@ -145,8 +145,20 @@ def social(update: Update, context: CallbackContext):
 
     _reply(update, phrases_commands["social"], reply_markup)
 
+def get_chat_id(update, context):
+    chat_id = -1
+
+    if update.message is not None:
+    # from a text message
+        chat_id = update.message.chat.id
+    elif update.callback_query is not None:
+    # from a callback message
+        chat_id = update.callback_query.message.chat.id
+    return chat_id
+
 
 def vademecum(update: Update, context: CallbackContext):
+    chat_id = get_chat_id(update, context)
 
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["vg"]), callback_data="vg", url="https://github.com/MozillaItalia/firefox-vademecum/blob/master/volantino/pdf/Vademecum_2.0_VG.pdf"),
@@ -154,6 +166,12 @@ def vademecum(update: Update, context: CallbackContext):
         [InlineKeyboardButton(str(phrases_buttons["vcv"]), callback_data="vcv",
                               url="https://github.com/MozillaItalia/firefox-vademecum/blob/master/volantino/pdf/Vademecum_2.0_CV.pdf")],
         [InlineKeyboardButton(str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
+    
+    #reply = "Findind and Sending a requested file to you. Hold on..."
+    path="https://github.com/MozillaItalia/firefox-vademecum/blob/master/volantino/pdf/Vademecum_2.0_CV.pdf"
+    
+    context.bot.send_document(chat_id, document=open("ttps://github.com/MozillaItalia/firefox-vademecum/blob/master/volantino/pdf/Vademecum_2.0_CV.pdf", 'rb'))
+    
     reply_markup = InlineKeyboardMarkup(buttons)
 
     _reply(update, phrases_commands["vademecum"], reply_markup)
