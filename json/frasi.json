@@ -17,7 +17,6 @@
     "avvisi2": "Disattiva avvisi 🔕",
     "call": "Mostra tutti i meeting",
     "call2": "Scopri quando si terrà il prossimo meeting 📆",
-    "cv": "Vademecum Common Voice",
     "design_marketing": "Vai al gruppo Design & Marketing 📐📈",
     "developers": "Vai al gruppo Developers 💻",
     "feedback": "Lascia il tuo feedback 💬",
@@ -49,6 +48,7 @@
     "testo_vademecum": "Vademecum",
     "vai_a_canale_youtube": "Val al canale YouTube 🦊",
     "vai_a_home": "Vai al gruppo Home 🦊",
+    "vc": "Vademecum Common Voice",
     "vg": "Vademecum Generale",
     "vt": "Vademecum Tecnico"
   },

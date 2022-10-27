@@ -145,6 +145,19 @@ def social(update: Update, context: CallbackContext):
 
     _reply(update, phrases_commands["social"], reply_markup)
 
+def vademecum(update: Update, context: CallbackContext):
+    buttons = [
+        [InlineKeyboardButton(str(phrases_buttons["vg"]), callback_data="vg"),
+        InlineKeyboardButton(str(phrases_buttons["vt"]), callback_data="vt")],
+        [InlineKeyboardButton(str(phrases_buttons["vc"]), callback_data="vc")],  
+        [InlineKeyboardButton(str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
+    reply_markup = InlineKeyboardMarkup(buttons)
+
+    _reply(update, phrases_commands["vademecum"], reply_markup)
+
+  
+    
+
 
 def rules(update: Update, context: CallbackContext):
     _reply(update, phrases_commands["regolamento"], None)
