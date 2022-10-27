@@ -1,4 +1,4 @@
-import logging
+import logging, requests
 from telegram.update import Update
 from telegram.ext import (CallbackContext, CallbackContext)
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
@@ -156,24 +156,26 @@ def get_chat_id(update, context):
         chat_id = update.callback_query.message.chat.id
     return chat_id
 
-
-def vademecum(update: Update, context: CallbackContext):
+def vg(update, context):
     chat_id = get_chat_id(update, context)
 
+    url="https://github.com/MozillaItalia/firefox-vademecum/raw/master/volantino/pdf/Vademecum_2.0_CV.pdf"
+    r = requests.get(url)
+    open("vg.pdf", "wb").write(r.content)
+    context.bot.send_document(chat_id, document=open("vg.pdf", "rb"),timeout=100)
+    
+
+def vademecum(update: Update, context: CallbackContext):
+
     buttons = [
-        [InlineKeyboardButton(str(phrases_buttons["vg"]), callback_data="vg", url="https://github.com/MozillaItalia/firefox-vademecum/blob/master/volantino/pdf/Vademecum_2.0_VG.pdf"),
+        [InlineKeyboardButton(str(phrases_buttons["vg"]), callback_data="vg"),
          InlineKeyboardButton(str(phrases_buttons["vt"]), callback_data="vt", url="https://github.com/MozillaItalia/firefox-vademecum/blob/master/volantino/pdf/Vademecum_2.0_VT.pdf")],
         [InlineKeyboardButton(str(phrases_buttons["vcv"]), callback_data="vcv",
                               url="https://github.com/MozillaItalia/firefox-vademecum/blob/master/volantino/pdf/Vademecum_2.0_CV.pdf")],
         [InlineKeyboardButton(str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
     
-    #reply = "Findind and Sending a requested file to you. Hold on..."
-    path="https://github.com/MozillaItalia/firefox-vademecum/blob/master/volantino/pdf/Vademecum_2.0_CV.pdf"
-    
-    context.bot.send_document(chat_id, document=open("ttps://github.com/MozillaItalia/firefox-vademecum/blob/master/volantino/pdf/Vademecum_2.0_CV.pdf", 'rb'))
-    
+     
     reply_markup = InlineKeyboardMarkup(buttons)
-
     _reply(update, phrases_commands["vademecum"], reply_markup)
 
 

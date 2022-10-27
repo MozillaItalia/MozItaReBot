@@ -9,7 +9,7 @@ from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandl
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
 from src.reader import ListReader, PhrasesReader
-from src.commands import rules, start, help, unknown, progetti, groups, feedback, social, vademecum
+from src.commands import rules, start, help, unknown, progetti, groups, feedback, social, vademecum, vg
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
@@ -169,6 +169,8 @@ def buttons_handler(update: Update, context: CallbackContext):
 
     elif clicked_button == 'vademecum':
         vademecum(update, context)
+    elif clicked_button == 'vg':
+        vg(update, context)    
     else:
         unknown(update, context)
 
@@ -186,6 +188,7 @@ def start_bot(token: str, base_url: str = None) -> None:
     dispatcher.add_handler(CommandHandler("feedback", feedback))
     dispatcher.add_handler(CommandHandler("social", social))
     dispatcher.add_handler(CommandHandler("vademecum", vademecum))
+    dispatcher.add_handler(CommandHandler("vg", vg))
 
     # comandi che rimandano a gruppi (comandi redirect)
     # alias:
