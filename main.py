@@ -157,16 +157,16 @@ def buttons_handler(update: Update, context: CallbackContext):
 
     elif clicked_button == 'gruppi':
         groups(update, context)
-   
+
     elif clicked_button == 'regolamento':
         rules(update, context)
-   
+
     elif clicked_button == 'feedback':
         feedback(update, context)
-   
+
     elif clicked_button == 'social':
         social(update, context)
-   
+
     elif clicked_button == 'vademecum':
         vademecum(update, context)
     else:
@@ -186,7 +186,6 @@ def start_bot(token: str, base_url: str = None) -> None:
     dispatcher.add_handler(CommandHandler("feedback", feedback))
     dispatcher.add_handler(CommandHandler("social", social))
     dispatcher.add_handler(CommandHandler("vademecum", vademecum))
-
 
     # comandi che rimandano a gruppi (comandi redirect)
     # alias:
