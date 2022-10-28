@@ -1,5 +1,8 @@
-import logging, requests, os
+import logging
+import requests
+import os
 from telegram.update import Update
+
 
 def get_chat_id(update, context):
     chat_id = -1
@@ -9,8 +12,9 @@ def get_chat_id(update, context):
         chat_id = update.callback_query.message.chat.id
     return chat_id
 
+
 def download_file(url):
     req = requests.get(url)
-    file = open("resurces/"+str(os.path.basename(url)), "wb").write(req.content)
+    file = open("resurces/"+str(os.path.basename(url)),
+                "wb").write(req.content)
     return file
-   
