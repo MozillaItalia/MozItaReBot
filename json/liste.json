@@ -35,6 +35,11 @@
         "Mozilla Italia Hub Bot": "https://github.com/Sav22999/mozitahub_bot",
         "Vademecum Generale, Tecnico e Common Voice": "https://github.com/MozillaItalia/firefox-vademecum"
     },
+    "link_vademecum": {
+        "Vademecum Common Voice": "https://github.com/MozillaItalia/firefox-vademecum/raw/master/volantino/pdf/Vademecum_2.0_CV.pdf",
+        "Vademecum Generale": "https://github.com/MozillaItalia/firefox-vademecum/raw/master/volantino/pdf/Vademecum_2.0_VG.pdf",
+        "Vademecum Tecnico": "https://github.com/MozillaItalia/firefox-vademecum/raw/master/volantino/pdf/Vademecum_2.0_VT.pdf"
+    },
     "social": {
         "Discourse": "https://discourse.mozilla.org/c/community-portal/mozilla-italia",
         "Facebook": "https://www.facebook.com/mozillaitalia",

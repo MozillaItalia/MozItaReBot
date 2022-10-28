@@ -1,8 +1,9 @@
-import logging, requests
+import logging, requests, os
 from telegram.update import Update
 from telegram.ext import (CallbackContext, CallbackContext)
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 from .reader import PhrasesReader, ListReader
+from .utils import *
 
 phrases_reader = PhrasesReader()
 phrases_notices = phrases_reader.get_notices()
@@ -145,30 +146,12 @@ def social(update: Update, context: CallbackContext):
 
     _reply(update, phrases_commands["social"], reply_markup)
 
-def get_chat_id(update, context):
-    chat_id = -1
 
-    if update.message is not None:
-    # from a text message
-        chat_id = update.message.chat.id
-    elif update.callback_query is not None:
-    # from a callback message
-        chat_id = update.callback_query.message.chat.id
-    return chat_id
-
-def vg(update, context):
-    chat_id = get_chat_id(update, context)
-
-    url="https://github.com/MozillaItalia/firefox-vademecum/raw/master/volantino/pdf/Vademecum_2.0_CV.pdf"
-    r = requests.get(url)
-    open("vg.pdf", "wb").write(r.content)
-    context.bot.send_document(chat_id, document=open("vg.pdf", "rb"),timeout=100)
-    
 
 def vademecum(update: Update, context: CallbackContext):
 
     buttons = [
-        [InlineKeyboardButton(str(phrases_buttons["vg"]), callback_data="vg"),
+        [InlineKeyboardButton(str(phrases_buttons["vg"]), callback_data="vademecum_generale"),
          InlineKeyboardButton(str(phrases_buttons["vt"]), callback_data="vt", url="https://github.com/MozillaItalia/firefox-vademecum/blob/master/volantino/pdf/Vademecum_2.0_VT.pdf")],
         [InlineKeyboardButton(str(phrases_buttons["vcv"]), callback_data="vcv",
                               url="https://github.com/MozillaItalia/firefox-vademecum/blob/master/volantino/pdf/Vademecum_2.0_CV.pdf")],
@@ -177,6 +160,20 @@ def vademecum(update: Update, context: CallbackContext):
      
     reply_markup = InlineKeyboardMarkup(buttons)
     _reply(update, phrases_commands["vademecum"], reply_markup)
+
+
+
+def vademecum_generale(update, context):
+    chat_id = get_chat_id(update, context)
+    buttons= [[InlineKeyboardButton(str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
+
+    _reply(update,  phrases_actions["vademecum_invio_in_corso"], None)
+    reply_markup = InlineKeyboardMarkup(buttons)
+
+    f=download_file(liste["link_vademecum"]["Vademecum Generale"])
+
+    context.bot.send_document(chat_id, document=open("resurces/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Generale"])), "rb"),timeout=100)
+    _reply(update, phrases_actions["consulta_vg"], reply_markup)
 
 
 def rules(update: Update, context: CallbackContext):
