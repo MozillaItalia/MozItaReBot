@@ -172,7 +172,7 @@ def vademecum_cv(update, context):
 
     download_file(liste["link_vademecum"]["Vademecum Common Voice"])
 
-    context.bot.send_document(chat_id, document=open("resurces/"+str(os.path.basename(
+    context.bot.send_document(chat_id, document=open("resources/"+str(os.path.basename(
         liste["link_vademecum"]["Vademecum Common Voice"])), "rb"), timeout=100)
     _reply(update, phrases_actions["consulta_vcv"], reply_markup)
 
@@ -188,7 +188,7 @@ def vademecum_generale(update, context):
     download_file(liste["link_vademecum"]["Vademecum Generale"])
 
     context.bot.send_document(chat_id, document=open(
-        "resurces/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Generale"])), "rb"), timeout=100)
+        "resources/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Generale"])), "rb"), timeout=100)
     _reply(update, phrases_actions["consulta_vg"], reply_markup)
 
 
@@ -203,7 +203,7 @@ def vademecum_tecnico(update, context):
     download_file(liste["link_vademecum"]["Vademecum Tecnico"])
 
     context.bot.send_document(chat_id, document=open(
-        "resurces/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Tecnico"])), "rb"), timeout=100)
+        "resources/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Tecnico"])), "rb"), timeout=100)
     _reply(update, phrases_actions["consulta_vt"], reply_markup)
 
 
