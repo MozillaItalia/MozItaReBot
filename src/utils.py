@@ -15,6 +15,8 @@ def get_chat_id(update, context):
 
 def download_file(url):
     req = requests.get(url)
+    if not os.path.exists("resources/"):
+        os.mkdir("resources/",)
     file = open("resources/"+str(os.path.basename(url)),
                 "wb").write(req.content)
     return file
