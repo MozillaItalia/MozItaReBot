@@ -19,7 +19,6 @@ TOKEN = os.getenv("TOKEN")
 
 try:
     phrases_reader = PhrasesReader()
-    phrases_notices = phrases_reader.get_notices()
     phrases_buttons = phrases_reader.get_buttons()
     phrases_commands = phrases_reader.get_commands()
     phrases_locations = phrases_reader.get_locations()
@@ -52,36 +51,36 @@ def handler_groups(update: Update, context: CallbackContext):
 
     if cmd == "home":
         buttons = [
-            [InlineKeyboardButton(str(phrases_buttons["home"]), url=str(
-                liste["link_gruppi"]["home"]), callback_data="home")]
+            [InlineKeyboardButton(str(phrases_buttons["testo_home"]), url=str(
+                liste["link_gruppi"]["Home 🦊"]), callback_data="home")]
         ]
-        txt = str(phrases_commands["home"])
+        txt = str(phrases_locations["home"])
 
     elif cmd == "news":
         buttons = [
             [InlineKeyboardButton(str(phrases_buttons["news"]), url=str(
-                liste["link_gruppi"]["news"]), callback_data="news")]
+                liste["link_gruppi"]["Ultime notizie 🆕"]), callback_data="news")]
         ]
         txt = str(phrases_commands["news"])
 
     elif cmd == "dev" or cmd == "developers" or cmd == "sviluppo":
         buttons = [
             [InlineKeyboardButton(str(phrases_buttons["developers"]), url=str(
-                liste["link_gruppi"]["developers"]), callback_data="dev")]
+                liste["link_gruppi"]["Developers 💻"]), callback_data="dev")]
         ]
-        txt = str(phrases_commands["dev"])
+        txt = str(phrases_commands["developers"])
 
     elif cmd == "dem" or cmd == "design" or cmd == "marketing":
         buttons = [
-            [InlineKeyboardButton(str(phrases_buttons["dem"]), url=str(
-                liste["link_gruppi"]["dem"]), callback_data="dem")]
+            [InlineKeyboardButton(str(phrases_buttons["design_marketing"]), url=str(
+                liste["link_gruppi"]["Design & Marketing 📐📈"]), callback_data="dem")]
         ]
         txt = str(phrases_commands["dem"])
 
     elif cmd == "lion" or cmd == "l10n":
         buttons = [
             [InlineKeyboardButton(str(phrases_buttons["l10n"]), url=str(
-                liste["link_gruppi"]["l10n"]), callback_data="l10n")]
+                liste["link_gruppi"]["L10n 🌐"]), callback_data="l10n")]
         ]
         txt = str(phrases_commands["l10n"])
     else:
@@ -160,7 +159,6 @@ def start_bot(token: str, base_url: str = None) -> None:
     dispatcher.add_handler(CommandHandler("social", social))
     dispatcher.add_handler(CommandHandler("vademecum", vademecum))
     dispatcher.add_handler(CommandHandler("forum", forum))
-
 
     # comandi che rimandano a gruppi (comandi redirect)
     # alias:

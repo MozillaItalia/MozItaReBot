@@ -8,7 +8,6 @@ from .reader import PhrasesReader, ListReader
 from .utils import *
 
 phrases_reader = PhrasesReader()
-phrases_notices = phrases_reader.get_notices()
 phrases_buttons = phrases_reader.get_buttons()
 phrases_commands = phrases_reader.get_commands()
 phrases_locations = phrases_reader.get_locations()
@@ -57,14 +56,11 @@ def help(update: Update, context: CallbackContext):
              str(phrases_buttons["testo_social"]), callback_data="social"),
          InlineKeyboardButton(str(phrases_buttons["start2"]), callback_data="supporto")],
 
-        [InlineKeyboardButton(str(phrases_buttons["testo_avvisi"]), callback_data="avvisi"),
-         InlineKeyboardButton(
-             str(phrases_buttons["testo_call"]), callback_data="meeting"),
-         InlineKeyboardButton(str(phrases_buttons["testo_progetti_attivi"]), callback_data="progetti")],
+        [InlineKeyboardButton(str(phrases_buttons["testo_progetti_attivi"]), callback_data="progetti"),
 
-        [InlineKeyboardButton(str(phrases_buttons["testo_progetti_attivi"]), callback_data="vademecum"),
-         InlineKeyboardButton(
-             str(phrases_buttons["regolamento"]), callback_data="regolamento"),
+         InlineKeyboardButton(str(phrases_buttons["testo_vademecum"]), callback_data="vademecum")],
+        [InlineKeyboardButton(
+            str(phrases_buttons["regolamento"]), callback_data="regolamento"),
          InlineKeyboardButton(str(phrases_buttons["testo_info"]), callback_data="info")],
 
         [InlineKeyboardButton(str(phrases_buttons["feedback"]),
@@ -219,6 +215,7 @@ def vademecum_tecnico(update, context):
         "resources/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Tecnico"])), "rb"), timeout=100)
     _reply(update, phrases_actions["consulta_vt"], reply_markup)
 
+
 def forum(update: Update, context: CallbackContext):
 
     buttons = [
@@ -228,7 +225,6 @@ def forum(update: Update, context: CallbackContext):
         phrases_buttons["back_mostra_help"], callback_data="help")])
     reply_markup = InlineKeyboardMarkup(buttons)
     _reply(update, phrases_locations["forum"], reply_markup)
-
 
 
 def rules(update: Update, context: CallbackContext):
