@@ -9,7 +9,9 @@ from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandl
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
 from src.reader import ListReader, PhrasesReader
-from src.commands import rules, start, help, unknown, progetti, groups, feedback, social, vademecum, vademecum_cv, vademecum_generale, vademecum_tecnico
+from src.commands import rules, start, help, unknown, progetti, groups, feedback, social, vademecum, vademecum_cv, vademecum_generale, vademecum_tecnico, supporto, forum
+
+
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
@@ -102,57 +104,15 @@ def buttons_handler(update: Update, context: CallbackContext):
     clicked_button = str(query.data).lower()
 
     if clicked_button == "help":
-        query.message.reply_markdown(str(phrases_commands["help"]))
-        buttons = [
-            [InlineKeyboardButton(str(phrases_buttons["testo_gruppi"]), callback_data="gruppi"),
-             InlineKeyboardButton(
-                 str(phrases_buttons["testo_social"]), callback_data="social"),
-             InlineKeyboardButton(str(phrases_buttons["start2"]), callback_data="supporto")],
-
-            [InlineKeyboardButton(str(phrases_buttons["testo_avvisi"]), callback_data="avvisi"),
-             InlineKeyboardButton(
-                 str(phrases_buttons["testo_call"]), callback_data="meeting"),
-             InlineKeyboardButton(str(phrases_buttons["testo_progetti_attivi"]), callback_data="progetti")],
-
-            [InlineKeyboardButton(str(phrases_buttons["testo_vademecum"]), callback_data="vademecum"),
-             InlineKeyboardButton(
-                 str(phrases_buttons["testo_regolamento"]), callback_data="regolamento"),
-             InlineKeyboardButton(str(phrases_buttons["testo_info"]), callback_data="info")],
-
-            [InlineKeyboardButton(
-                str(phrases_buttons["feedback"]), callback_data="feedback")]
-        ]
-
-        reply_markup = InlineKeyboardMarkup(buttons)
-        query.message.reply_text(
-            str(phrases_commands["help2"]), reply_markup=reply_markup)
+        help(update, context)
 
     elif clicked_button == "supporto":
-        buttons = [
-            [InlineKeyboardButton(str(phrases_buttons["support"]), url=str(liste["link_gruppi"]["home"])),
-             InlineKeyboardButton(str(phrases_buttons["support2"]), callback_data="forum")],
-            [InlineKeyboardButton(str(phrases_buttons["support3"]),
-                                  url="https://forum.mozillaitalia.org/index.php?board=9.0")],
-            [InlineKeyboardButton(
-                str(phrases_buttons["back_mostra_help"]), callback_data="help")]
-        ]
-
-        reply_markup = InlineKeyboardMarkup(buttons)
-        query.message.reply_markdown(
-            str(phrases_commands["supporto"]),  reply_markup=reply_markup)
+        supporto(update, context)
 
     elif clicked_button == "forum":
-        buttons = [
-            [InlineKeyboardButton(str(phrases_buttons["forum"]),
-                                  url="https://forum.mozillaitalia.org/")],
-            [InlineKeyboardButton(str(phrases_buttons["back_mostra_help"]), callback_data="help")]]
-
-        reply_markup = InlineKeyboardMarkup(buttons)
-        query.message.reply_markdown(
-            str(phrases_locations["forum"]),  reply_markup=reply_markup)
+        forum(update, context)
 
     elif clicked_button == "progetti":
-        buttons = []
         progetti(update, context)
 
     elif clicked_button == 'gruppi':
@@ -194,10 +154,13 @@ def start_bot(token: str, base_url: str = None) -> None:
     dispatcher.add_handler(CommandHandler("help", help))
     dispatcher.add_handler(CommandHandler("progetti", progetti))
     dispatcher.add_handler(CommandHandler("gruppi", groups))
+    dispatcher.add_handler(CommandHandler("supporto", supporto))
     dispatcher.add_handler(CommandHandler("regolamento", rules))
     dispatcher.add_handler(CommandHandler("feedback", feedback))
     dispatcher.add_handler(CommandHandler("social", social))
     dispatcher.add_handler(CommandHandler("vademecum", vademecum))
+    dispatcher.add_handler(CommandHandler("forum", forum))
+
 
     # comandi che rimandano a gruppi (comandi redirect)
     # alias:

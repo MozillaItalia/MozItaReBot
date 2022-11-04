@@ -125,6 +125,19 @@ def groups(update: Update, context: CallbackContext):
     _reply(update, phrases_commands["gruppi"], reply_markup)
 
 
+def supporto(update: Update, context: CallbackContext):
+    link_faq = "https://forum.mozillaitalia.org/index.php?board=9.0"
+    buttons = [
+        [InlineKeyboardButton(str(phrases_buttons["support"]), url=str(liste["link_gruppi"]["home"])),
+         InlineKeyboardButton(str(phrases_buttons["support2"]), callback_data="forum")],
+        [InlineKeyboardButton(str(phrases_buttons["support3"]), url=str(link_faq))]]
+
+    buttons.append([InlineKeyboardButton(
+        phrases_buttons["back_mostra_help"], callback_data="help")])
+    reply_markup = InlineKeyboardMarkup(buttons)
+    _reply(update, phrases_commands["supporto"], reply_markup)
+
+
 def feedback(update: Update, context: CallbackContext):
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["feedback"]), callback_data="feedback", url=str(
@@ -205,6 +218,17 @@ def vademecum_tecnico(update, context):
     context.bot.send_document(chat_id, document=open(
         "resources/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Tecnico"])), "rb"), timeout=100)
     _reply(update, phrases_actions["consulta_vt"], reply_markup)
+
+def forum(update: Update, context: CallbackContext):
+
+    buttons = [
+        [InlineKeyboardButton(str(phrases_buttons["forum"]),
+                              url=liste['social']["Forum"])]]
+    buttons.append([InlineKeyboardButton(
+        phrases_buttons["back_mostra_help"], callback_data="help")])
+    reply_markup = InlineKeyboardMarkup(buttons)
+    _reply(update, phrases_locations["forum"], reply_markup)
+
 
 
 def rules(update: Update, context: CallbackContext):
