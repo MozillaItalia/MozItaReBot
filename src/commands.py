@@ -1,8 +1,11 @@
 import logging
+import requests
+import os
 from telegram.update import Update
 from telegram.ext import (CallbackContext, CallbackContext)
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 from .reader import PhrasesReader, ListReader
+from .utils import *
 
 phrases_reader = PhrasesReader()
 phrases_notices = phrases_reader.get_notices()
@@ -159,6 +162,63 @@ def social(update: Update, context: CallbackContext):
     _reply(update, phrases_commands["social"], reply_markup)
 
 
+def vademecum(update: Update, context: CallbackContext):
+
+    buttons = [
+        [InlineKeyboardButton(str(phrases_buttons["vg"]), callback_data="vademecum_generale"),
+         InlineKeyboardButton(str(phrases_buttons["vt"]), callback_data="vademecum_tecnico")],
+        [InlineKeyboardButton(str(phrases_buttons["vcv"]),
+                              callback_data="vademecum_cv")],
+        [InlineKeyboardButton(str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
+
+    reply_markup = InlineKeyboardMarkup(buttons)
+    _reply(update, phrases_commands["vademecum"], reply_markup)
+
+
+def vademecum_cv(update, context):
+    chat_id = get_chat_id(update, context)
+    buttons = [[InlineKeyboardButton(
+        str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
+
+    _reply(update,  phrases_actions["vademecum_invio_in_corso"], None)
+    reply_markup = InlineKeyboardMarkup(buttons)
+
+    download_file(liste["link_vademecum"]["Vademecum Common Voice"])
+
+    context.bot.send_document(chat_id, document=open("resources/"+str(os.path.basename(
+        liste["link_vademecum"]["Vademecum Common Voice"])), "rb"), timeout=100)
+    _reply(update, phrases_actions["consulta_vcv"], reply_markup)
+
+
+def vademecum_generale(update, context):
+    chat_id = get_chat_id(update, context)
+    buttons = [[InlineKeyboardButton(
+        str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
+
+    _reply(update,  phrases_actions["vademecum_invio_in_corso"], None)
+    reply_markup = InlineKeyboardMarkup(buttons)
+
+    download_file(liste["link_vademecum"]["Vademecum Generale"])
+
+    context.bot.send_document(chat_id, document=open(
+        "resources/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Generale"])), "rb"), timeout=100)
+    _reply(update, phrases_actions["consulta_vg"], reply_markup)
+
+
+def vademecum_tecnico(update, context):
+    chat_id = get_chat_id(update, context)
+    buttons = [[InlineKeyboardButton(
+        str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
+
+    _reply(update,  phrases_actions["vademecum_invio_in_corso"], None)
+    reply_markup = InlineKeyboardMarkup(buttons)
+
+    download_file(liste["link_vademecum"]["Vademecum Tecnico"])
+
+    context.bot.send_document(chat_id, document=open(
+        "resources/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Tecnico"])), "rb"), timeout=100)
+    _reply(update, phrases_actions["consulta_vt"], reply_markup)
+
 def forum(update: Update, context: CallbackContext):
 
     buttons = [
@@ -168,6 +228,7 @@ def forum(update: Update, context: CallbackContext):
         phrases_buttons["back_mostra_help"], callback_data="help")])
     reply_markup = InlineKeyboardMarkup(buttons)
     _reply(update, phrases_locations["forum"], reply_markup)
+
 
 
 def rules(update: Update, context: CallbackContext):
