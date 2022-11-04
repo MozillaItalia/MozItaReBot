@@ -87,6 +87,8 @@ def handler_groups(update: Update, context: CallbackContext):
         buttons = []
         txt = "Caro sviluppatore, hai dimenticato di gestire questo handler. Crea un nuovo case e definisci bottone e testo.\n\n_\"Ottimo! Ma hai lasciato degli oggetti alle tue spalle...\"_\n- Merlin Munroe"
 
+    buttons.append([InlineKeyboardButton(
+        str(phrases_buttons["back_mostra_help"]),    callback_data="help")])
     reply_markup = InlineKeyboardMarkup(buttons)
     update.message.reply_text(
         txt, reply_markup=reply_markup, parse_mode="MARKDOWN")
