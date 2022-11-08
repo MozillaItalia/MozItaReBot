@@ -54,19 +54,14 @@
     "home": "**Mozilla Italia - Home** è un gruppo che accomuna tutti i volontari Mozilla del territorio italiano. Unisciti anche tu e diventa parte di questa grande famiglia!"
   },
   "actions": {
-    "anno": "Ecco l'elenco dei meeting video registrati nel corso del __{{**anno**}}__:",
     "consulta_vcv": "Consulta il vademecum di Common Voice",
     "consulta_vg": "Consulta il vademecum generale",
     "consulta_vt": "Consulta il vademecum tecnico",
-    "listacall": "Un elenco dei meeting completati, con relativo collegamento ai file video registrati.",
-    "non_sei_admin": "Non sei un amministratore del bot, pertanto non hai i permessi per utilizzare questa azione.",
-    "prossima_call": "Il prossimo meeting video comunitario si terrà il **{{**giorno_call**}} {{**mese_call**}} {{**anno_call**}}**, __(il primo venerdì del mese)__ alle ore **18:30**.\nIl dato potrebbe subire variazioni (slittamenti o annullamenti). Ti consigliamo di chiedere conferma nel gruppo __HOME__ di Mozilla Italia.",
-    "vademecum_invio_in_corso": "__Invio del vademecum in corso...__",
-    "view tweet": "Visualizza tweet"
+    "qualcodsa_e_andato_storto": "Qualcvosa è andato storto, vademecum non scaricato",
+    "vademecum_invio_in_corso": "__Invio del vademecum in corso...__"
   },
   "starts": {
     "start": "Benvenuto nel bot di Mozilla Italia.\nUtilizzandomi potrai ottenere informazioni, richiedere supporto e molto altro.\nScopri le funzioni a tua disposizione digitando /help.\n\nHo attivato in automatico le notifiche per le future novità che annunceremo 📢. Controlla lo stato della tua iscrizione digitando /avvisi, così da poterli attivare e disattivare rapidamente.\n\nRicorda di unirti al nostro gruppo utenti Telegram, raggiungici in [Mozilla Italia - Home](https://t.me/joinchat/BCql3UMy26nl4qxuRecDsQ)!",
     "start2": "Dopo questa breve presentazione, che cosa desideri fare? 😄",
-    "start_nousername": "‼️ __Attenzione: non hai impostato alcun nome utente.__ Per poterti unire ai gruppi Mozilla Italia **è consigliato** impostarne uno."
   }
 }

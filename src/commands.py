@@ -175,11 +175,13 @@ def vademecum_cv(update, context):
     chat_id = get_chat_id(update, context)
     buttons = [[InlineKeyboardButton(
         str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
-
+    try:
+        download_file(liste["link_vademecum"]["Vademecum Common Voice"])
+    except requests.exceptions.RequestException:
+        _reply(update, phrases_actions["qualcodsa_e_andato_storto"], None)
+        exit()
     _reply(update,  phrases_actions["vademecum_invio_in_corso"], None)
     reply_markup = InlineKeyboardMarkup(buttons)
-
-    download_file(liste["link_vademecum"]["Vademecum Common Voice"])
 
     context.bot.send_document(chat_id, document=open("resources/"+str(os.path.basename(
         liste["link_vademecum"]["Vademecum Common Voice"])), "rb"), timeout=100)
@@ -193,8 +195,11 @@ def vademecum_generale(update, context):
 
     _reply(update,  phrases_actions["vademecum_invio_in_corso"], None)
     reply_markup = InlineKeyboardMarkup(buttons)
-
-    download_file(liste["link_vademecum"]["Vademecum Generale"])
+    try:
+        download_file(liste["link_vademecum"]["Vademecum Generale"])
+    except requests.exceptions.RequestException:
+        _reply(update, phrases_actions["qualcodsa_e_andato_storto"], None)
+        exit()
 
     context.bot.send_document(chat_id, document=open(
         "resources/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Generale"])), "rb"), timeout=100)
@@ -208,8 +213,11 @@ def vademecum_tecnico(update, context):
 
     _reply(update,  phrases_actions["vademecum_invio_in_corso"], None)
     reply_markup = InlineKeyboardMarkup(buttons)
-
-    download_file(liste["link_vademecum"]["Vademecum Tecnico"])
+    try:
+        download_file(liste["link_vademecum"]["Vademecum Tecnico"])
+    except requests.exceptions.RequestException:
+        _reply(update, phrases_actions["qualcodsa_e_andato_storto"], None)
+        exit()
 
     context.bot.send_document(chat_id, document=open(
         "resources/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Tecnico"])), "rb"), timeout=100)
