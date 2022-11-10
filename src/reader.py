@@ -47,9 +47,6 @@ class PhrasesReader(BaseReader):
     def __init__(self):
         self.phrases = self.read_data()
 
-    def get_notices(self):
-        return self.phrases['notices']
-
     def get_buttons(self):
         return self.phrases['buttons']
 

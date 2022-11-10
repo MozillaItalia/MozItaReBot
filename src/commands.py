@@ -8,7 +8,6 @@ from .reader import PhrasesReader, ListReader
 from .utils import *
 
 phrases_reader = PhrasesReader()
-phrases_notices = phrases_reader.get_notices()
 phrases_buttons = phrases_reader.get_buttons()
 phrases_commands = phrases_reader.get_commands()
 phrases_locations = phrases_reader.get_locations()
@@ -43,13 +42,11 @@ def help(update: Update, context: CallbackContext):
     - gruppi: reindirizza ai vari gruppi della community
     - social: reindirizza ai canali social della community
     - ho bisogno di assistenza: reindirizza ad un messaggio di aiuto
-    - avvisi: -
-    - meeting: -
-    - \ attivi: mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia
-    - vademecum: -
-    - regolamento: -
-    - info: -
-    - lascia il tuo feedback: - '''
+    - attivi: mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia
+    - vademecum: ottieni il vademecum, il volantino che in poche e semplici parole ti illustra che cosa è Mozilla e i vari progetti attivi.
+    - regolamento: per leggere il regolamento comunitario.
+    - info: avere informazioni riguardo questo bot.
+    - lascia il tuo feedback: permette di lasciare un feedback sul gruppo home '''
 
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["testo_gruppi"]), callback_data="gruppi"),
@@ -57,14 +54,11 @@ def help(update: Update, context: CallbackContext):
              str(phrases_buttons["testo_social"]), callback_data="social"),
          InlineKeyboardButton(str(phrases_buttons["start2"]), callback_data="supporto")],
 
-        [InlineKeyboardButton(str(phrases_buttons["testo_avvisi"]), callback_data="avvisi"),
-         InlineKeyboardButton(
-             str(phrases_buttons["testo_call"]), callback_data="meeting"),
-         InlineKeyboardButton(str(phrases_buttons["testo_progetti_attivi"]), callback_data="progetti")],
+        [InlineKeyboardButton(str(phrases_buttons["testo_progetti_attivi"]), callback_data="progetti"),
 
-        [InlineKeyboardButton(str(phrases_buttons["testo_progetti_attivi"]), callback_data="vademecum"),
-         InlineKeyboardButton(
-             str(phrases_buttons["regolamento"]), callback_data="regolamento"),
+         InlineKeyboardButton(str(phrases_buttons["testo_vademecum"]), callback_data="vademecum")],
+        [InlineKeyboardButton(
+            str(phrases_buttons["regolamento"]), callback_data="regolamento"),
          InlineKeyboardButton(str(phrases_buttons["testo_info"]), callback_data="info")],
 
         [InlineKeyboardButton(str(phrases_buttons["feedback"]),
@@ -128,7 +122,7 @@ def groups(update: Update, context: CallbackContext):
 def supporto(update: Update, context: CallbackContext):
     link_faq = "https://forum.mozillaitalia.org/index.php?board=9.0"
     buttons = [
-        [InlineKeyboardButton(str(phrases_buttons["support"]), url=str(liste["link_gruppi"]["home"])),
+        [InlineKeyboardButton(str(phrases_buttons["support"]), url=str(liste["link_gruppi"]["Home 🦊"])),
          InlineKeyboardButton(str(phrases_buttons["support2"]), callback_data="forum")],
         [InlineKeyboardButton(str(phrases_buttons["support3"]), url=str(link_faq))]]
 
@@ -141,7 +135,7 @@ def supporto(update: Update, context: CallbackContext):
 def feedback(update: Update, context: CallbackContext):
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["feedback"]), callback_data="feedback", url=str(
-            liste["link_gruppi"]["home"]))],
+            liste["link_gruppi"]["Home 🦊"]))],
         [InlineKeyboardButton(str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
     reply_markup = InlineKeyboardMarkup(buttons)
     _reply(update, phrases_commands["feedback"], reply_markup)
@@ -179,11 +173,13 @@ def vademecum_cv(update, context):
     chat_id = get_chat_id(update, context)
     buttons = [[InlineKeyboardButton(
         str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
-
+    try:
+        download_file(liste["link_vademecum"]["Vademecum Common Voice"])
+    except requests.exceptions.RequestException:
+        _reply(update, phrases_actions["qualcosa_e_andato_storto"], None)
+        exit()
     _reply(update,  phrases_actions["vademecum_invio_in_corso"], None)
     reply_markup = InlineKeyboardMarkup(buttons)
-
-    download_file(liste["link_vademecum"]["Vademecum Common Voice"])
 
     context.bot.send_document(chat_id, document=open("resources/"+str(os.path.basename(
         liste["link_vademecum"]["Vademecum Common Voice"])), "rb"), timeout=100)
@@ -197,8 +193,11 @@ def vademecum_generale(update, context):
 
     _reply(update,  phrases_actions["vademecum_invio_in_corso"], None)
     reply_markup = InlineKeyboardMarkup(buttons)
-
-    download_file(liste["link_vademecum"]["Vademecum Generale"])
+    try:
+        download_file(liste["link_vademecum"]["Vademecum Generale"])
+    except requests.exceptions.RequestException:
+        _reply(update, phrases_actions["qualcosa_e_andato_storto"], None)
+        exit()
 
     context.bot.send_document(chat_id, document=open(
         "resources/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Generale"])), "rb"), timeout=100)
@@ -212,12 +211,16 @@ def vademecum_tecnico(update, context):
 
     _reply(update,  phrases_actions["vademecum_invio_in_corso"], None)
     reply_markup = InlineKeyboardMarkup(buttons)
-
-    download_file(liste["link_vademecum"]["Vademecum Tecnico"])
+    try:
+        download_file(liste["link_vademecum"]["Vademecum Tecnico"])
+    except requests.exceptions.RequestException:
+        _reply(update, phrases_actions["qualcosa_e_andato_storto"], None)
+        exit()
 
     context.bot.send_document(chat_id, document=open(
         "resources/"+str(os.path.basename(liste["link_vademecum"]["Vademecum Tecnico"])), "rb"), timeout=100)
     _reply(update, phrases_actions["consulta_vt"], reply_markup)
+
 
 def forum(update: Update, context: CallbackContext):
 
@@ -228,7 +231,6 @@ def forum(update: Update, context: CallbackContext):
         phrases_buttons["back_mostra_help"], callback_data="help")])
     reply_markup = InlineKeyboardMarkup(buttons)
     _reply(update, phrases_locations["forum"], reply_markup)
-
 
 
 def rules(update: Update, context: CallbackContext):
