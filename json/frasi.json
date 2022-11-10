@@ -26,6 +26,7 @@
     "testo_social": "Social 🦊",
     "testo_supporto": "Supporto 🆘",
     "testo_vademecum": "Vademecum",
+    "vai_a_canale_youtube": "Val al canale YouTube 🦊",
     "vai_a_home": "Vai al gruppo Home 🦊",
     "vcv": "Vademecum Common Voice",
     "vg": "Vademecum Generale",
@@ -36,7 +37,7 @@
     "developers": "Entra a far parte del gruppo dedicato agli sviluppatori.",
     "feedback": "Puoi scrivere quando vuoi un parere sui servizi offerti da Mozilla Italia entrando nel gruppo '__Home__' e discutendone con noi.\nNon preoccuparti, nessuno ti giudicherà o aggredirà, troverai persone pronte a comprendere i tuoi problemi e ad accogliere i tuoi suggerimenti segnalandoli - __quando possibile__ - a Mozilla.",
     "gruppi": "Qui di seguito ti elenco tutti i canali e gruppi ufficiali di Mozilla Italia su Telegram:\n\n**Mozilla Italia - Home** (/home):\nil gruppo delle tematiche varie ma mai off-topic; aggiornamenti, novità, richiesta di informazioni e supporto sui prodotti del mondo Mozilla e di tutto ciò che gravita attorno a loro.\n\n**Mozilla Italia - News** (/news):\nil canale che ti permette di rimanere sempre aggiornato sulle ultime novità dal mondo Mozilla, curato dalla comunità italiana.\n\n**Mozilla Italia - Developers** (/developers):\nil gruppo dedicato agli sviluppatori, coloro che si dedicano maggiormente alla programmazione e che necessitano di un luogo di discussione riservato a figure più tecniche.\n\n**Mozilla Italia - L10n** (/l10n):\nil gruppo dedicato ai localizzatori (traduttori) dei programmi, della documentazione e degli articoli. Se pensi di poter dare una mano in tal senso fai un salto nel gruppo __L10n__.\n\n**Mozilla Italia - Design & Marketing** (/dem):\nil gruppo dedicato a coloro che si dedicano alla grafica e alla promozione sui Social Network (e non) di Mozilla Italia.\n",
-    "help": "Questa è la lista di comandi a tua disposizione:\n/start: visualizza il messaggio iniziale.\n/gruppi: ottieni la lista di tutti i gruppi e canali ufficiali di Mozilla Italia.\n/supporto: chiedi e ricevi assistenza da parte dei nostri volontari su prodotti e progetti Mozilla.\n/avvisi: controlla lo stato attuale degli avvisi, da qui potrai attivarli o disattivarli.\n/meeting: ottieni informazioni sui meeting video comunitari mensili.\n/progetti: dai un'occhiata ai progetti attivi di Mozilla e della comunità italiana.\n/vademecum: dai un'occhiata al vademecum, il volantino che in poche e semplici parole ti illustra che cos'è Mozilla e i suoi progetti in corso.\n/regolamento: leggi il regolamento dei nostri gruppi.\n/info: ottieni informazioni riguardo questo bot.\n/feedback: sentiti libero di lasciare un feedback sul bot e sui servizi di Mozilla Italia. Ricorda di essere sincero e imparziale per permetterci di migliorare ciò che offriamo 😊\n/social: seguici sui nostri social 😄`admin`: gestisci le impostazioni del bot (solo per amministratori).\n",
+    "help": "Questa è la lista di comandi a tua disposizione:\n/start: visualizza il messaggio iniziale.\n/gruppi: ottieni la lista di tutti i gruppi e canali ufficiali di Mozilla Italia.\n/supporto: chiedi e ricevi assistenza da parte dei nostri volontari su prodotti e progetti Mozilla.\n/avvisi: controlla lo stato attuale degli avvisi, da qui potrai attivarli o disattivarli.\n/progetti: dai un'occhiata ai progetti attivi di Mozilla e della comunità italiana.\n/vademecum: dai un'occhiata al vademecum, il volantino che in poche e semplici parole ti illustra che cos'è Mozilla e i suoi progetti in corso.\n/regolamento: leggi il regolamento dei nostri gruppi.\n/info: ottieni informazioni riguardo questo bot.\n/feedback: sentiti libero di lasciare un feedback sul bot e sui servizi di Mozilla Italia. Ricorda di essere sincero e imparziale per permetterci di migliorare ciò che offriamo 😊\n/social: seguici sui nostri social 😄\n",
     "help2": "Cosa posso fare per te adesso?",
     "info": "Questo è un bot realizzato per Mozilla Italia 🇮🇹\nVersione: {{**versione**}}\nUltimo aggiornamento: {{**ultimo_aggiornamento**}}\n\nCollaboratori (in ordine alfabetico): {{**collaboratori_stampa**}}",
     "l10n": "Il gruppo dedicato ai localizzatori (traduttori) dei programmi, della documentazione e degli articoli. Se pensi di poter dare una mano in tal senso fai un salto nel gruppo L10n.",
@@ -57,11 +58,11 @@
     "consulta_vcv": "Consulta il vademecum di Common Voice",
     "consulta_vg": "Consulta il vademecum generale",
     "consulta_vt": "Consulta il vademecum tecnico",
-    "qualcodsa_e_andato_storto": "Qualcvosa è andato storto, vademecum non scaricato",
+    "qualcosa_e_andato_storto": "Qualcosa è andato storto, vademecum non scaricato",
     "vademecum_invio_in_corso": "__Invio del vademecum in corso...__"
   },
   "starts": {
     "start": "Benvenuto nel bot di Mozilla Italia.\nUtilizzandomi potrai ottenere informazioni, richiedere supporto e molto altro.\nScopri le funzioni a tua disposizione digitando /help.\n\nHo attivato in automatico le notifiche per le future novità che annunceremo 📢. Controlla lo stato della tua iscrizione digitando /avvisi, così da poterli attivare e disattivare rapidamente.\n\nRicorda di unirti al nostro gruppo utenti Telegram, raggiungici in [Mozilla Italia - Home](https://t.me/joinchat/BCql3UMy26nl4qxuRecDsQ)!",
-    "start2": "Dopo questa breve presentazione, che cosa desideri fare? 😄",
+    "start2": "Dopo questa breve presentazione, che cosa desideri fare? 😄"
   }
 }

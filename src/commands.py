@@ -124,7 +124,7 @@ def groups(update: Update, context: CallbackContext):
 def supporto(update: Update, context: CallbackContext):
     link_faq = "https://forum.mozillaitalia.org/index.php?board=9.0"
     buttons = [
-        [InlineKeyboardButton(str(phrases_buttons["support"]), url=str(liste["link_gruppi"]["home"])),
+        [InlineKeyboardButton(str(phrases_buttons["support"]), url=str(liste["link_gruppi"]["Home 🦊"])),
          InlineKeyboardButton(str(phrases_buttons["support2"]), callback_data="forum")],
         [InlineKeyboardButton(str(phrases_buttons["support3"]), url=str(link_faq))]]
 
@@ -137,7 +137,7 @@ def supporto(update: Update, context: CallbackContext):
 def feedback(update: Update, context: CallbackContext):
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["feedback"]), callback_data="feedback", url=str(
-            liste["link_gruppi"]["home"]))],
+            liste["link_gruppi"]["Home 🦊"]))],
         [InlineKeyboardButton(str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
     reply_markup = InlineKeyboardMarkup(buttons)
     _reply(update, phrases_commands["feedback"], reply_markup)
@@ -178,7 +178,7 @@ def vademecum_cv(update, context):
     try:
         download_file(liste["link_vademecum"]["Vademecum Common Voice"])
     except requests.exceptions.RequestException:
-        _reply(update, phrases_actions["qualcodsa_e_andato_storto"], None)
+        _reply(update, phrases_actions["qualcosa_e_andato_storto"], None)
         exit()
     _reply(update,  phrases_actions["vademecum_invio_in_corso"], None)
     reply_markup = InlineKeyboardMarkup(buttons)
@@ -198,7 +198,7 @@ def vademecum_generale(update, context):
     try:
         download_file(liste["link_vademecum"]["Vademecum Generale"])
     except requests.exceptions.RequestException:
-        _reply(update, phrases_actions["qualcodsa_e_andato_storto"], None)
+        _reply(update, phrases_actions["qualcosa_e_andato_storto"], None)
         exit()
 
     context.bot.send_document(chat_id, document=open(
@@ -216,7 +216,7 @@ def vademecum_tecnico(update, context):
     try:
         download_file(liste["link_vademecum"]["Vademecum Tecnico"])
     except requests.exceptions.RequestException:
-        _reply(update, phrases_actions["qualcodsa_e_andato_storto"], None)
+        _reply(update, phrases_actions["qualcosa_e_andato_storto"], None)
         exit()
 
     context.bot.send_document(chat_id, document=open(
