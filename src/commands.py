@@ -42,13 +42,11 @@ def help(update: Update, context: CallbackContext):
     - gruppi: reindirizza ai vari gruppi della community
     - social: reindirizza ai canali social della community
     - ho bisogno di assistenza: reindirizza ad un messaggio di aiuto
-    - avvisi: -
-    - meeting: -
-    - \ attivi: mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia
-    - vademecum: -
-    - regolamento: -
-    - info: -
-    - lascia il tuo feedback: - '''
+    - attivi: mostra i progetti attivi, con rispettivi link, di Mozilla e di Mozilla Italia
+    - vademecum: ottieni il vademecum, il volantino che in poche e semplici parole ti illustra che cosa è Mozilla e i vari progetti attivi.
+    - regolamento: per leggere il regolamento comunitario.
+    - info: avere informazioni riguardo questo bot.
+    - lascia il tuo feedback: permette di lasciare un feedback sul gruppo home '''
 
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["testo_gruppi"]), callback_data="gruppi"),
