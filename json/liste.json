@@ -1,22 +1,9 @@
-{
-    "adminlist": {
-        "123150516": "Edoardo Viola",
-        "161975186": "Stefania Delprete",
-        "240188083": "Saverio Morelli",
-        "69903837": "Daniele Scasciafratte",
-        "75870906": "Simone Massaro",
-        "810740389": "Damiano Gualandri"
-    },
+{ 
     "channels": {
         "@mozitanews": "Mozilla Italia News"
     },
     "collaboratori": {
-        "@dag7dev": "Damiano Gualandri",
-        "@martinligabue": "Martin Ligabue",
-        "@mone27": "Simone Massaro",
-        "@mte90": "Daniele Scasciafratte",
-        "@sara_tod": "Sara Todaro",
-        "@sav22999": "Saverio Morelli"
+        "_comment": "per futura referenza, in caso bisogni aggiungere qualcuno a mano"
     },
     "progetti": {
         "Common Voice": "https://commonvoice.mozilla.org/it",
