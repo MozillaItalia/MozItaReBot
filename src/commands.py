@@ -234,4 +234,14 @@ def forum(update: Update, context: CallbackContext):
 
 
 def rules(update: Update, context: CallbackContext):
-    _reply(update, phrases_commands["regolamento"], None)
+    link_regolamento = "https://raw.githubusercontent.com/wiki/MozillaItalia/assets/Regolamento.md"
+    try:
+        download_file(link_regolamento)
+    except requests.exceptions.RequestException:
+        _reply(update, phrases_actions["qualcosa_e_andato_storto"], None)
+        exit()
+    buttons = [[InlineKeyboardButton(str(phrases_buttons["back_mostra_help"]),callback_data="help")]]
+    f =open("resources/"+str(os.path.basename(link_regolamento)), "r")
+
+    reply_markup = InlineKeyboardMarkup(buttons)
+    _reply(update, f.read(), reply_markup)
