@@ -157,7 +157,6 @@ def social(update: Update, context: CallbackContext):
 
 
 def vademecum(update: Update, context: CallbackContext):
-
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["vg"]), callback_data="vademecum_generale"),
          InlineKeyboardButton(str(phrases_buttons["vt"]), callback_data="vademecum_tecnico")],
@@ -223,7 +222,6 @@ def vademecum_tecnico(update, context):
 
 
 def forum(update: Update, context: CallbackContext):
-
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["forum"]),
                               url=liste['social']["Forum"])]]
@@ -233,15 +231,16 @@ def forum(update: Update, context: CallbackContext):
     _reply(update, phrases_locations["forum"], reply_markup)
 
 
-def rules(update: Update, context: CallbackContext):
+def regolamento(update: Update, context: CallbackContext):
     link_regolamento = "https://raw.githubusercontent.com/wiki/MozillaItalia/assets/Regolamento.md"
     try:
         download_file(link_regolamento)
     except requests.exceptions.RequestException:
         _reply(update, phrases_actions["qualcosa_e_andato_storto"], None)
         exit()
-    buttons = [[InlineKeyboardButton(str(phrases_buttons["back_mostra_help"]),callback_data="help")]]
-    f =open("resources/"+str(os.path.basename(link_regolamento)), "r")
+    buttons = [[InlineKeyboardButton(
+        str(phrases_buttons["back_mostra_help"]), callback_data="help")]]
+    f = open("resources/"+str(os.path.basename(link_regolamento)), "r")
 
     reply_markup = InlineKeyboardMarkup(buttons)
     _reply(update, f.read(), reply_markup)

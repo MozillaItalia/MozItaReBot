@@ -9,7 +9,7 @@ from telegram.ext import (Updater, CallbackContext, CommandHandler, MessageHandl
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
 from src.reader import ListReader, PhrasesReader
-from src.commands import rules, start, help, unknown, progetti, groups, feedback, social, vademecum, vademecum_cv, vademecum_generale, vademecum_tecnico, supporto, forum
+from src.commands import regolamento, start, help, unknown, progetti, groups, feedback, social, vademecum, vademecum_cv, vademecum_generale, vademecum_tecnico, supporto, forum
 
 
 load_dotenv()
@@ -120,7 +120,7 @@ def buttons_handler(update: Update, context: CallbackContext):
         groups(update, context)
 
     elif clicked_button == 'regolamento':
-        rules(update, context)
+        regolamento(update, context)
 
     elif clicked_button == 'feedback':
         feedback(update, context)
@@ -156,7 +156,7 @@ def start_bot(token: str, base_url: str = None) -> None:
     dispatcher.add_handler(CommandHandler("progetti", progetti))
     dispatcher.add_handler(CommandHandler("gruppi", groups))
     dispatcher.add_handler(CommandHandler("supporto", supporto))
-    dispatcher.add_handler(CommandHandler("regolamento", rules))
+    dispatcher.add_handler(CommandHandler("regolamento", regolamento))
     dispatcher.add_handler(CommandHandler("feedback", feedback))
     dispatcher.add_handler(CommandHandler("social", social))
     dispatcher.add_handler(CommandHandler("vademecum", vademecum))
