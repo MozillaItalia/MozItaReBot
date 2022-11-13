@@ -105,6 +105,7 @@ def progetti(update: Update, context: CallbackContext):
 
 
 def groups(update: Update, context: CallbackContext):
+    '''Comando gruppi, mostra i bottoni che rimandano ai gruppi della community'''
     buttons = []
     for group_name in liste['link_gruppi'].keys():
         buttons.append(
@@ -120,6 +121,7 @@ def groups(update: Update, context: CallbackContext):
 
 
 def supporto(update: Update, context: CallbackContext):
+    '''Comando attivabile dal bottono "ho bisogno di aiuto" mostra bottoni che rimandano al gruppo home, al forum o alla pagina delle faq'''
     link_faq = "https://forum.mozillaitalia.org/index.php?board=9.0"
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["support"]), url=str(liste["link_gruppi"]["Home 🦊"])),
@@ -133,6 +135,7 @@ def supporto(update: Update, context: CallbackContext):
 
 
 def feedback(update: Update, context: CallbackContext):
+    '''Comando feedback, mostra un bottone per lasciare un feedback nel gruppo home'''
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["feedback"]), callback_data="feedback", url=str(
             liste["link_gruppi"]["Home 🦊"]))],
@@ -142,6 +145,7 @@ def feedback(update: Update, context: CallbackContext):
 
 
 def social(update: Update, context: CallbackContext):
+    ''''Comando social, mostra bottoni che rimandano direttamente ai social della community'''
     buttons = []
     for social_name in liste['social'].keys():
         buttons.append(
@@ -157,6 +161,7 @@ def social(update: Update, context: CallbackContext):
 
 
 def vademecum(update: Update, context: CallbackContext):
+    '''Comando vademeucm, mostra i bottoni per scaricare il Vademecum Generale, tecnico e di Common Voice'''
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["vg"]), callback_data="vademecum_generale"),
          InlineKeyboardButton(str(phrases_buttons["vt"]), callback_data="vademecum_tecnico")],
@@ -169,6 +174,7 @@ def vademecum(update: Update, context: CallbackContext):
 
 
 def vademecum_cv(update, context):
+    '''Invia il Vademecum di Common Voice scaricandolo dal repo di Mozita'''
     chat_id = get_chat_id(update, context)
     buttons = [[InlineKeyboardButton(
         str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
@@ -186,6 +192,7 @@ def vademecum_cv(update, context):
 
 
 def vademecum_generale(update, context):
+    '''Invia il Vademecum Generale scaricandolo dal repo di Mozita'''
     chat_id = get_chat_id(update, context)
     buttons = [[InlineKeyboardButton(
         str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
@@ -204,6 +211,7 @@ def vademecum_generale(update, context):
 
 
 def vademecum_tecnico(update, context):
+    '''Invia il Vademecum tecnico scaricandolo dal repo di Mozita'''
     chat_id = get_chat_id(update, context)
     buttons = [[InlineKeyboardButton(
         str(phrases_buttons["back_mostra_help"]),  callback_data="help")]]
@@ -222,6 +230,7 @@ def vademecum_tecnico(update, context):
 
 
 def forum(update: Update, context: CallbackContext):
+    '''Comando forum, mostra il bottone che rimanda al forum della community'''
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["forum"]),
                               url=liste['social']["Forum"])]]
@@ -232,6 +241,7 @@ def forum(update: Update, context: CallbackContext):
 
 
 def regolamento(update: Update, context: CallbackContext):
+    '''Comando regolamento, mostra un messaggio con il regolamento scaricandolo dal repo di Mozita '''
     link_regolamento = "https://raw.githubusercontent.com/wiki/MozillaItalia/assets/Regolamento.md"
     try:
         download_file(link_regolamento)
