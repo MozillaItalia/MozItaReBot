@@ -145,7 +145,7 @@ def feedback(update: Update, context: CallbackContext):
 
 
 def social(update: Update, context: CallbackContext):
-    ''''Comando social, mostra bottoni che rimandano direttamente ai social della community'''
+    '''Comando social, mostra bottoni che rimandano direttamente ai social della community'''
     buttons = []
     for social_name in liste['social'].keys():
         buttons.append(
