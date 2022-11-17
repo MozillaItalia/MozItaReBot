@@ -262,6 +262,7 @@ def regolamento(update: Update, context: CallbackContext):
 
 def info(update: Update, context: CallbackContext):
     link_contributors = "https://api.github.com/repos/dag7dev/MozItaReBot/contributors"
+    chat_id = get_chat_id(update, context)
     buttons = []
     try:
         download_file(link_contributors)
@@ -274,15 +275,15 @@ def info(update: Update, context: CallbackContext):
     new_string=phrases_commands["info"].format(versione="2.0",ultimo_aggiornamento="ieri")
     temp_string=""
     for i in data:
-        temp_string=temp_string+"\n"+"["+i["login"]+"]"+"("+i["html_url"]+")"
+        temp_string=temp_string+" "+"["+i["login"]+"]"+"("+i["html_url"]+")"
     new_string=new_string+temp_string
-   
    
     buttons.append([InlineKeyboardButton(
         str(phrases_buttons["back_mostra_help"]),    callback_data="help")])
 
     reply_markup = InlineKeyboardMarkup(buttons)
-    _reply(update, new_string, reply_markup)
+    context.bot.send_message(chat_id, text=new_string,disable_web_page_preview=True,parse_mode='MARKDOWN', reply_markup=reply_markup) 
+
 
 
 
@@ -311,6 +312,5 @@ def info2(update: Update, context: CallbackContext):
     #print(info_string.format(versione="2.0",ultimo_aggiornamento="ieri",collaboratori_stampa="asd"))
     buttons.append([InlineKeyboardButton(
         str(phrases_buttons["back_mostra_help"]),    callback_data="help")])
-
     reply_markup = InlineKeyboardMarkup(buttons)
-    _reply(update, info_s, reply_markup)
+    update.message.text_markdown_v2(info_s, link_preview=False)
