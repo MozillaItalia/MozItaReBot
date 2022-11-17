@@ -1,6 +1,7 @@
 import logging
 import requests
 import os
+import json
 from telegram.update import Update
 from telegram.ext import (CallbackContext, CallbackContext)
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
@@ -256,3 +257,28 @@ def regolamento(update: Update, context: CallbackContext):
 
     reply_markup = InlineKeyboardMarkup(buttons)
     _reply(update, f.read(), reply_markup)
+
+
+def info(update: Update, context: CallbackContext):
+    link_contributors = "https://api.github.com/repos/dag7dev/MozItaReBot/contributors"
+    contributors_list = []
+    buttons = []
+    try:
+        download_file(link_contributors)
+    except requests.exceptions.RequestException:
+        _reply(update, phrases_actions["qualcosa_e_andato_storto"], None)
+        exit()
+
+    f = open("resources/"+str(os.path.basename(link_contributors)), "r")
+    data = json.load(f)
+    for i in data:
+       # print(i["login"], i["html_url"])
+        buttons.append(
+            [InlineKeyboardButton(
+                text=str(i["login"]), callback_data=None, url=str(i["html_url"]))]
+        )
+    buttons.append([InlineKeyboardButton(
+        str(phrases_buttons["back_mostra_help"]),    callback_data="help")])
+
+    reply_markup = InlineKeyboardMarkup(buttons)
+    _reply(update, phrases_commands["info"], reply_markup)
