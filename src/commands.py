@@ -259,7 +259,39 @@ def regolamento(update: Update, context: CallbackContext):
     _reply(update, f.read(), reply_markup)
 
 
+
 def info(update: Update, context: CallbackContext):
+    link_contributors = "https://api.github.com/repos/dag7dev/MozItaReBot/contributors"
+    buttons = []
+    try:
+        download_file(link_contributors)
+    except requests.exceptions.RequestException:
+        _reply(update, phrases_actions["qualcosa_e_andato_storto"], None)
+        exit()
+
+    f = open("resources/"+str(os.path.basename(link_contributors)), "r")
+    data = json.load(f)
+    new_string=phrases_commands["info"].format(versione="2.0",ultimo_aggiornamento="ieri")
+    temp_string=""
+    for i in data:
+        temp_string=temp_string+"\n"+"["+i["login"]+"]"+"("+i["html_url"]+")"
+    new_string=new_string+temp_string
+   
+   
+    buttons.append([InlineKeyboardButton(
+        str(phrases_buttons["back_mostra_help"]),    callback_data="help")])
+
+    reply_markup = InlineKeyboardMarkup(buttons)
+    _reply(update, new_string, reply_markup)
+
+
+
+
+
+
+
+
+def info2(update: Update, context: CallbackContext):
     link_contributors = "https://api.github.com/repos/dag7dev/MozItaReBot/contributors"
     contributors_list = []
     buttons = []
@@ -273,12 +305,12 @@ def info(update: Update, context: CallbackContext):
     data = json.load(f)
     for i in data:
        # print(i["login"], i["html_url"])
-        buttons.append(
-            [InlineKeyboardButton(
-                text=str(i["login"]), callback_data=None, url=str(i["html_url"]))]
-        )
+        info_s=phrases_commands["info"].format(versione="2.0",ultimo_aggiornamento="ieri",collaboratori_stampa=i["login"])
+
+    #info_string= "Questo è un bot realizzato per Mozilla Italia 🇮🇹\nVersione: {versione}\nUltimo aggiornamento: {ultimo_aggiornamento}\n\nCollaboratori (in ordine alfabetico): {collaboratori_stampa}"
+    #print(info_string.format(versione="2.0",ultimo_aggiornamento="ieri",collaboratori_stampa="asd"))
     buttons.append([InlineKeyboardButton(
         str(phrases_buttons["back_mostra_help"]),    callback_data="help")])
 
     reply_markup = InlineKeyboardMarkup(buttons)
-    _reply(update, phrases_commands["info"], reply_markup)
+    _reply(update, info_s, reply_markup)
