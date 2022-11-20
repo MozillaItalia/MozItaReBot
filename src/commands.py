@@ -275,7 +275,7 @@ def info(update: Update, context: CallbackContext):
     # @TODO: sicuramente bisognerà trovare un modo più automatico per
     # prendere il numero di versione e la data dell'ultimo aggiornamento
     new_string = phrases_commands["info"].format(
-        versione="0.0.1", ultimo_aggiornamento="2022.10.20")
+        versione="1.0.0", ultimo_aggiornamento="2022.10.20")
 
     format_string = "[{username}]({account_url})"
     temp_string = ""
