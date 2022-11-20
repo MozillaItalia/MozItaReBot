@@ -1,4 +1,4 @@
-{ 
+{
     "channels": {
         "@mozitanews": "Mozilla Italia News"
     },
@@ -19,7 +19,7 @@
     "progetti_mozita": {
         "Common Voice Tool": "https://github.com/dag7dev/common-voice-tool",
         "Mozilla Italia Antispam Bot": "https://github.com/Sav22999/mozitaantispam_bot",
-        "Mozilla Italia Hub Bot": "https://github.com/Sav22999/mozitahub_bot",
+        "Mozilla Italia Hub Bot": "https://github.com/dag7dev/MozItaReBot",
         "Vademecum Generale, Tecnico e Common Voice": "https://github.com/MozillaItalia/firefox-vademecum"
     },
     "link_vademecum": {
@@ -42,5 +42,10 @@
         "Developers 💻": "https://t.me/+bv2WcZQadHZhMDE0",
         "L10n 🌐": "https://t.me/mozItaL10n",
         "Design & Marketing 📐📈": "https://t.me/+SPpi0DHZZ8cHLZ5V"
+    },
+    "link_vari": {
+        "link_faq": "https://forum.mozillaitalia.org/index.php?board=9.0",
+        "link_regolamento": "https://raw.githubusercontent.com/wiki/MozillaItalia/assets/Regolamento.md",
+        "link_contributors": "https://api.github.com/repos/dag7dev/MozItaReBot/contributors"
     }
 }
