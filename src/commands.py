@@ -276,10 +276,12 @@ def info(update: Update, context: CallbackContext):
     new_string = phrases_commands["info"].format(
         versione="2.0", ultimo_aggiornamento="ieri")
 
-    format_string="[{username}]({account_url})"
-    temp_string=""
+    format_string = "[{username}]({account_url})"
+    temp_string = ""
     for i in data:
-        temp_string += " " + format_string.format(username=i["login"], account_url=i["html_url"] )
+        temp_string += " " + \
+            format_string.format(
+                username=i["login"], account_url=i["html_url"])
     new_string = new_string+temp_string
 
     buttons.append([InlineKeyboardButton(
