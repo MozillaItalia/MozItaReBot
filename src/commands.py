@@ -272,8 +272,10 @@ def info(update: Update, context: CallbackContext):
              str(os.path.basename(liste['link_vari']["link_contributors"])), "r")
     data = json.load(f)
 
+    # @TODO: sicuramente bisognerà trovare un modo più automatico per
+    # prendere il numero di versione e la data dell'ultimo aggiornamento
     new_string = phrases_commands["info"].format(
-        versione="2.0", ultimo_aggiornamento="ieri")    # placeholders temporanei
+        versione="0.0.1", ultimo_aggiornamento="2022.10.20")
 
     format_string = "[{username}]({account_url})"
     temp_string = ""
