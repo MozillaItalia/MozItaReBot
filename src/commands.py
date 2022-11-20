@@ -274,7 +274,7 @@ def info(update: Update, context: CallbackContext):
     data = json.load(f)
 
     new_string = phrases_commands["info"].format(
-        versione="2.0", ultimo_aggiornamento="ieri")
+        versione="2.0", ultimo_aggiornamento="ieri")    # placeholders temporanei
 
     format_string = "[{username}]({account_url})"
     temp_string = ""

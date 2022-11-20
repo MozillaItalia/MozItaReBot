@@ -142,10 +142,9 @@ def buttons_handler(update: Update, context: CallbackContext):
 
     elif clicked_button == 'vademecum_tecnico':
         vademecum_tecnico(update, context)
-    
+
     elif clicked_button == 'info':
         info(update, context)
-   
 
     else:
         unknown(update, context)
@@ -167,7 +166,6 @@ def start_bot(token: str, base_url: str = None) -> None:
     dispatcher.add_handler(CommandHandler("vademecum", vademecum))
     dispatcher.add_handler(CommandHandler("forum", forum))
     dispatcher.add_handler(CommandHandler("info", info))
-
 
     # comandi che rimandano a gruppi (comandi redirect)
     # alias:
