@@ -260,6 +260,7 @@ def regolamento(update: Update, context: CallbackContext):
 
 
 def info(update: Update, context: CallbackContext):
+    ''' Comando info, mostra le informazioni di sviluppo del bot, versione, ultimo aggiornamento e collabboratori che vengono presi direttamente tramite le API di github'''
     link_contributors = "https://api.github.com/repos/dag7dev/MozItaReBot/contributors"
     chat_id = get_chat_id(update, context)
     buttons = []
@@ -271,11 +272,14 @@ def info(update: Update, context: CallbackContext):
 
     f = open("resources/"+str(os.path.basename(link_contributors)), "r")
     data = json.load(f)
+
     new_string = phrases_commands["info"].format(
         versione="2.0", ultimo_aggiornamento="ieri")
-    temp_string = ""
+
+    format_string="[{username}]({account_url})"
+    temp_string=""
     for i in data:
-        temp_string = temp_string+" "+"["+i["login"]+"]"+"("+i["html_url"]+")"
+        temp_string += " " + format_string.format(username=i["login"], account_url=i["html_url"] )
     new_string = new_string+temp_string
 
     buttons.append([InlineKeyboardButton(
