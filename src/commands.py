@@ -1,6 +1,7 @@
 import logging
 import requests
 import os
+import json
 from telegram.update import Update
 from telegram.ext import (CallbackContext, CallbackContext)
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
@@ -123,11 +124,10 @@ def groups(update: Update, context: CallbackContext):
 
 def supporto(update: Update, context: CallbackContext):
     '''Comando attivabile dal bottone "ho bisogno di aiuto" mostra i bottoni che rimandano al gruppo home, al forum e alla pagina delle faq.'''
-    link_faq = "https://forum.mozillaitalia.org/index.php?board=9.0"
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["support"]), url=str(liste["link_gruppi"]["Home 🦊"])),
          InlineKeyboardButton(str(phrases_buttons["support2"]), callback_data="forum")],
-        [InlineKeyboardButton(str(phrases_buttons["support3"]), url=str(link_faq))]]
+        [InlineKeyboardButton(str(phrases_buttons["support3"]), url=str(liste["link_v ari"]["link_faq"]))]]
 
     buttons.append([InlineKeyboardButton(
         phrases_buttons["back_mostra_help"], callback_data="help")])
@@ -244,15 +244,50 @@ def forum(update: Update, context: CallbackContext):
 
 def regolamento(update: Update, context: CallbackContext):
     '''Comando regolamento, mostra un messaggio con il regolamento scaricandolo dal repo di Mozilla Italia.'''
-    link_regolamento = "https://raw.githubusercontent.com/wiki/MozillaItalia/assets/Regolamento.md"
     try:
-        download_file(link_regolamento)
+        download_file(liste['link_vari']["link_regolamento"])
     except requests.exceptions.RequestException:
         _reply(update, phrases_actions["qualcosa_e_andato_storto"], None)
         exit()
     buttons = [[InlineKeyboardButton(
         str(phrases_buttons["back_mostra_help"]), callback_data="help")]]
-    f = open("resources/"+str(os.path.basename(link_regolamento)), "r")
+    f = open("resources/" +
+             str(os.path.basename(liste['link_vari']["link_regolamento"])), "r")
 
     reply_markup = InlineKeyboardMarkup(buttons)
     _reply(update, f.read(), reply_markup)
+
+
+def info(update: Update, context: CallbackContext):
+    ''' Comando info, mostra le informazioni di sviluppo del bot, versione, ultimo aggiornamento e collabboratori che vengono presi direttamente tramite le API di github'''
+    chat_id = get_chat_id(update, context)
+    buttons = []
+    try:
+        download_file(liste['link_vari']["link_contributors"])
+    except requests.exceptions.RequestException:
+        _reply(update, phrases_actions["qualcosa_e_andato_storto"], None)
+        exit()
+
+    f = open("resources/" +
+             str(os.path.basename(liste['link_vari']["link_contributors"])), "r")
+    data = json.load(f)
+
+    # @TODO: sicuramente bisognerà trovare un modo più automatico per
+    # prendere il numero di versione e la data dell'ultimo aggiornamento
+    new_string = phrases_commands["info"].format(
+        versione="0.0.1", ultimo_aggiornamento="2022.10.20")
+
+    format_string = "[{username}]({account_url})"
+    temp_string = ""
+    for i in data:
+        temp_string += " " + \
+            format_string.format(
+                username=i["login"], account_url=i["html_url"])
+    new_string = new_string+temp_string
+
+    buttons.append([InlineKeyboardButton(
+        str(phrases_buttons["back_mostra_help"]),    callback_data="help")])
+
+    reply_markup = InlineKeyboardMarkup(buttons)
+    context.bot.send_message(chat_id, text=new_string, disable_web_page_preview=True,
+                             parse_mode='MARKDOWN', reply_markup=reply_markup)
