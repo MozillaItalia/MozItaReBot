@@ -25,13 +25,14 @@ Dare un'occhiata al file [CONTRIBUTING.md](https://github.com/dag7dev/MozItaReBo
 | /start | messaggio iniziale. |
 | /help | /aiuto: mostra le azioni che è possibile fare nel bot. |
 | /home, /dem, /l10n, /developers, /sviluppo  | comandi di reindirizzamento ai gruppi specifici |
-| /gruppi | ottenere la lista di tutti i gruppi e canali ufficiali di Mozilla Italia. |
-| /supporto | richiedere e ricevere assistenza, da parte dei nostri volontari, su prodotti e progetti di Mozilla |
+| /gruppi | ottenere la lista di tutti i gruppi di Mozilla Italia. |
+| /supporto | mostra i bottoni che rimandano al gruppo home, al forum e alla pagina delle faq |
 | /vademecum | ottieni il vademecum, il volantino che in poche e semplici parole ti illustra che cosa è Mozilla e i vari progetti attivi. |
 | /news | rimani sempre aggiornato sulle novità di Mozilla Italia; su questo canale potrai ricevere tutte le novità necessarie. |
-| /feedback | sentiti libero di lasciare un feedback sul bot e sui servizi di Mozilla Italia. Ricorda di essere sincero e imparziale per permetterci di migliore ciò che offriamo |
+| /feedback | sentiti libero di lasciare un feedback sul bot e sui servizi di Mozilla Italia. Ricorda di essere sincero e imparziale per permetterci di migliorare ciò che offriamo |
+| /social |  Rimani sempre connesso con noi. Dai un'occhiata ai nostri canali. |
 | /progetti | visualizzare tutti i progetti di Mozilla attivi e anche quelli direttamente della nostra comunità. |
-| /info | avere informazioni riguardo questo bot. |
+| /info | mostra le informazioni di sviluppo del bot, versione, ultimo aggiornamento e collaboratori che vengono presi direttamente tramite la lista dei contributors su GitHub.|
 | /meeting | avere informazioni sui meeting video mensili comunitari. |
 | /regolamento | per leggere il regolamento comunitario. |
-| /admin | (solo per admin) gestire alcune impostazioni del bot. |
+| /forum | hai domande relative al funzionamento di un'applicazione? Passa sul nostro forum. |
