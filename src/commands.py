@@ -127,7 +127,7 @@ def supporto(update: Update, context: CallbackContext):
     buttons = [
         [InlineKeyboardButton(str(phrases_buttons["support"]), url=str(liste["link_gruppi"]["Home 🦊"])),
          InlineKeyboardButton(str(phrases_buttons["support2"]), callback_data="forum")],
-        [InlineKeyboardButton(str(phrases_buttons["support3"]), url=str(liste["link_v ari"]["link_faq"]))]]
+        [InlineKeyboardButton(str(phrases_buttons["support3"]), url=str(liste["link_vari"]["link_faq"]))]]
 
     buttons.append([InlineKeyboardButton(
         phrases_buttons["back_mostra_help"], callback_data="help")])
