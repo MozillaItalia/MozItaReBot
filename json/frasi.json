@@ -62,7 +62,7 @@
     "vademecum_invio_in_corso": "__Invio del vademecum in corso...__"
   },
   "starts": {
-    "start": "Benvenuto nel bot di Mozilla Italia.\nUtilizzandomi potrai ottenere informazioni, richiedere supporto e molto altro.\nScopri le funzioni a tua disposizione digitando /help.\n\nHo attivato in automatico le notifiche per le future novità che annunceremo 📢. Controlla lo stato della tua iscrizione digitando /avvisi, così da poterli attivare e disattivare rapidamente.\n\nRicorda di unirti al nostro gruppo utenti Telegram, raggiungici in [Mozilla Italia - Home](https://t.me/joinchat/BCql3UMy26nl4qxuRecDsQ)!",
+    "start": "Benvenuto nel bot di Mozilla Italia.\nUtilizzandomi potrai ottenere informazioni, richiedere supporto e molto altro.\nScopri le funzioni a tua disposizione digitando /help.\n\nPuoi trovare la community in [Mozilla Italia - Home](https://t.me/joinchat/BCql3UMy26nl4qxuRecDsQ)!",
     "start2": "Dopo questa breve presentazione, che cosa desideri fare? 😄"
   }
 }
