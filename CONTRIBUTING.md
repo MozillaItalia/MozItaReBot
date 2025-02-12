@@ -1,11 +1,23 @@
-# Come contribuire nella repo (modus operandi)
+# Linee guida per contribuire
 
-1. Prenotarsi nella issue: scrivere nei commenti di ogni issue della quale volete occuparvi (o fatemelo semplicemente sapere) e vi assegno il task in questione.
+## Come contribuire
 
-2. Lavorare su un branch separato con un nome significativo (es. se il comando è /help un nome del branch potrebbe essere help-cmd)
+- **Come fare un commit in maniera efficiente**: https://www.conventionalcommits.org/en/v1.0.0/#summary
 
-3. A stato abbastanza maturo della funzionalità, aprire una PR sul branch main. Se avete bisogno di cambiare qualcosa, basta segnarla come draft.
+1. (opzionale) Aprire un issue relativa al cambiamento che state facendo
 
-4. Il lavoro consiste principalmente nel creare nuovi comandi. È sufficiente basarsi sui comandi già esistenti. Le funzioni, una volta ricevuto il messaggio dall'utente, devono inviare un messaggio a quello stesso utente prendendo il testo dal JSON a seconda del comando digitato. Ad esempio /help dovrà rispondere all'utente con frasi['cmd_help']. Leggere approfonditamente il sorgente del bot.
+2. Lavorare **su un branch separato** con un nome significativo (es. se il comando è `/help` un nome del branch potrebbe essere `help-cmd`)
 
-Dare un'occhiata anche all'[issue riepilogativo](https://github.com/dag7dev/MozItaReBot/issues/1).
+3. A stato maturo della funzionalità, aprire una PR sul branch main. Se avete bisogno di cambiare qualcosa, basta segnarla come `draft`.
+
+## Env file
+Non appesantire l'env file, aggiungendo variabili e stringhe inutili.
+
+## Gestire il numero di versione
+- x.y.z dove x è major, y minor e z è patch:
+    - x non dovrebbe venire incrementato, a meno che non venga cambiata la libreria o si modificano le funzioni in modo non retrocompatibile
+        - ad esempio siamo alla versione 1.0.0: il comando info produce la lista dei colori preferiti del tuo compagno di merende --> x viene incrementato di 1 --> 2.0.0
+    - y viene incrementato solo se vengono aggiunte nuove funzionalità
+        - ad esempio siamo alla versione 1.0.0: viene aggiunta una funzionalità per fare il caffé --> y viene incrementato di 1 --> 1.1.0
+    - z viene incrementato solo se vengono fatti cambiamenti considerati minimi (es. bugfix)
+        - ad esempio siamo alla versione 1.0.0: viene corretto un bug --> z viene incrementato di 1 --> 1.0.1
