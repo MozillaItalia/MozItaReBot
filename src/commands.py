@@ -29,7 +29,6 @@ def _reply(update: Update, text: str, reply_markup: InlineKeyboardMarkup, parse_
         query.message.reply_text(
             text, reply_markup=reply_markup, parse_mode=parse_mode)
 
-
 def start(update: Update, context: CallbackContext):
     '''Comando start, mostra messaggio di benvenuto e indirizza al menu'''
     buttons = [
